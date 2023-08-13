@@ -1,0 +1,65 @@
+.header {
+	background-color: #FFF;
+	padding: 18px 14px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+.header__not-login{
+	background-color: #465DFF;
+}
+
+.header__link {
+	height: 38px;
+	width: 38px;
+}
+
+.header__image {
+	object-fit: cover;
+}
+
+.header__sign-up {
+	color: #FFF;
+	text-align: right;
+	font-size: 10px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 16px;
+	text-decoration: none;
+	padding-right: 14px;
+}
+
+.header__sign-in {
+	color: #000;
+	font-size: 10px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 16px;
+	text-decoration: none;
+	background-color: #2BE080;
+	border-radius: 3px;
+	padding: 5px 12px;
+}
+
+/* на средний размер */
+@media (min-width: 768px) {
+	.header {
+		padding: 18px 30px;
+	}
+	.header__sign-up {
+		font-size: 12px;
+		padding-right: 30px;
+	}
+	.header__sign-in {
+		font-size: 12px;
+		padding: 8px 20px;
+	}
+}
+
+/* на максимальный размер */
+@media (min-width: 1280px) {
+	.header {
+		padding: 18px 70px;
+	}
+}

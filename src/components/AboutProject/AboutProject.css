@@ -1,0 +1,145 @@
+.about-project {
+	/* background-color: aquamarine; */
+	/* min-height: 608px; */
+	/* max-height: 641px; */
+	padding: 70px 18px;
+}
+
+.about-project__head {
+	font-size: 18px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	letter-spacing: -0.72px;
+	padding-bottom: 28px;
+	margin: 0;
+	border-bottom: 1px solid #000;
+}
+
+.about-project__about {
+	padding: 60px 0;
+	display: flex;
+	flex-direction: column;
+	gap: 56px;
+}
+
+.about-project__title {
+	font-size: 18px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	letter-spacing: -0.72px;
+	margin: 0;
+}
+
+.about-project__text {
+	font-size: 11px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 16px;
+	padding-top: 16.8px;
+	margin: 0;
+}
+
+.about-project__container {
+	display: grid;
+	grid-template-columns: 7fr 13fr;
+	margin: 0;
+}
+
+.about-project__button {
+	text-align: center;
+	font-size: 11px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	margin: 0 0 9px 0;
+	padding: 11.5px 0;
+}
+
+.about-project__button-back {
+	background-color: #2BE080;
+}
+
+.about-project__button-front {
+	background-color: #F2F2F2;
+}
+
+.about-project__caption {
+	color: #A0A0A0;
+	text-align: center;
+	font-size: 11px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	margin: 0;
+}
+
+/* на средний размер */
+@media (min-width: 768px) {
+	.about-project {
+		padding: 90px 50px;
+	}
+
+	.about-project__head {
+		font-size: 22px;
+		letter-spacing: -0.88px;
+		padding-bottom: 23px;
+	}
+
+	.about-project__about {
+		flex-direction: row;
+		padding-top: 70px;
+		padding-bottom: 93px;
+		gap: 30px;
+	}
+
+	.about-project__title {
+		font-size: 20px;
+		letter-spacing: -0.8px;
+	}
+
+	.about-project__text {
+		font-size: 12px;
+		line-height: 18px;
+		padding-top: 22px;
+	}
+
+	.about-project__container {
+		grid-template-columns: 1.05fr 4fr;
+	}
+
+	.about-project__button {
+		font-size: 14px;
+		padding: 9px 0;
+		margin-bottom: 14px;
+
+	}
+
+	.about-project__caption {
+		font-size: 14px;
+		line-height: 17px
+	}
+}
+
+/* на максимальный размер */
+@media (min-width: 1280px) {
+	.about-project {
+		padding: 110px 70px;
+	}
+
+	.about-project__about {
+		padding-bottom: 110px;
+		gap: 40px;
+	}
+
+	.about-project__text {
+		font-size: 14px;
+		line-height: 20px;
+		padding-top: 26px;
+	}
+
+	.about-project__container {
+		grid-template-columns: 1fr 4fr;
+	}
+}

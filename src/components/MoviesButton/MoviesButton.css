@@ -1,0 +1,36 @@
+.movies-button {
+	padding: 50px 10px 80px;
+}
+
+.movies-button__button {
+	color: #000;
+	text-align: center;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: normal;
+	width: 100%;
+	border: none;
+	padding: 11px 0 9px;
+	border-radius: 6px;
+	background-color: #F9F9F9;
+}
+
+.movies-button__button:hover {
+	opacity: 0.7;
+	cursor: pointer;
+}
+
+/* на средний размер */
+@media (min-width: 768px) {
+	.movies-button {
+		padding: 50px 30px 80px;
+	}
+}
+
+/* на максимальный размер */
+@media (min-width: 1280px) {
+	.movies-button {
+		padding: 50px 70px 80px;
+	}
+}

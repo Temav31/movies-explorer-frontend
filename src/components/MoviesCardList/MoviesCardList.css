@@ -1,0 +1,37 @@
+.movies-cardlist {
+	display: flex;
+	flex-direction: column;
+	padding: 40px 10px 30px;
+	gap: 20px;
+}
+.movies-cardlist__empty{
+	padding: 40px 10px 170px;
+}
+
+/* на средний размер */
+@media (min-width: 768px) {
+	.movies-cardlist {
+		display: grid;
+		padding: 70px 30px 30px;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 0;
+		grid-column-gap: 28px;
+		grid-row-gap: 35px;
+	}
+	.movies-cardlist__empty{
+		padding: 70px 30px 170px;
+	}
+}
+
+/* на максимальный размер */
+@media (min-width: 1280px) {
+	.movies-cardlist {
+		padding: 70px 70px 30px;
+		grid-template-columns: repeat(4, 1fr);
+		grid-column-gap: 20px;
+		grid-row-gap: 32px;
+	}
+	.movies-cardlist__empty{
+		padding: 70px 70px 170px;
+	}
+}

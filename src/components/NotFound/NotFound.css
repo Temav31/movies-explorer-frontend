@@ -1,0 +1,62 @@
+.not-found {
+	background-color:  #FFF;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.not-found__head {
+	color: #000;
+	font-size: 80px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	margin: 0;
+	padding-bottom: 10px;
+}
+
+.not-found__text {
+	font-size: 12px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	margin: 0;
+}
+
+.not-found__link {
+	color: #FF6838;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	position: fixed;
+	text-decoration: none;
+	bottom: 30px;
+	transition: 0.3s ease-in-out opacity;
+	cursor: pointer;
+}
+
+.not-found__link:hover {
+	opacity: 0.7;
+}
+
+/* на средний размер */
+@media (min-width: 768px) {
+	.not-found__head {
+		font-size: 140px;
+		padding-bottom: 5px;
+	}
+
+	.not-found__text {
+		font-size: 16px;
+	}
+
+	.not-found__link {
+		font-size: 14px;
+		/* display: flex; */
+		position: relative;
+		top: 184px;
+	}
+}
