@@ -60,6 +60,10 @@
 	margin: 0;
 }
 
+.about-me__link:hover {
+	opacity: 0.7;
+}
+
 /* на средний размер */
 @media (min-width: 768px) {
 	.about-me {

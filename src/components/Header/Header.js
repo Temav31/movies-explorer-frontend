@@ -8,7 +8,7 @@ import Navigation from "../Navigation/Navigation";
 import Menu from "../Menu/Menu";
 const Header = (props) => {
 	// const { isLoggin = true } = props;
-	const isLoggin = true;
+	const isLoggin = false;
 	// место
 	const location = useLocation();
 	return (
@@ -19,12 +19,12 @@ const Header = (props) => {
 			{!isLoggin ? (
 				<>
 					<div className="header__container">
-						<NavLink className="header__sign-up" to="/singup">
+						<Link className="header__sign-up" to="/signup">
 							Регистрация
-						</NavLink>
-						<NavLink className="header__sign-in" to="/singin">
+						</Link>
+						<Link className="header__sign-in" to="/signin">
 							Войти
-						</NavLink>
+						</Link>
 					</div>
 				</>
 			) : (
