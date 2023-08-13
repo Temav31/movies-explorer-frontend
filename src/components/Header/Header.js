@@ -7,8 +7,8 @@ import Logo from "../../images/logo.png";
 import Navigation from "../Navigation/Navigation";
 import Menu from "../Menu/Menu";
 const Header = (props) => {
-	// const { isLoggin = true } = props;
-	const isLoggin = false;
+	const { isLoggin = true } = props;
+	// const isLoggin = false;
 	// место
 	const location = useLocation();
 	return (
