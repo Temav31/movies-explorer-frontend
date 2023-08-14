@@ -26,7 +26,7 @@ const AboutMe = () => {
 						После того, как прошёл курс по веб-разработке, начал заниматься
 						фриланс-заказами и ушёл с постоянной работы.
 					</p>
-					<a className="about-me__link" href="https://github.com/Temav31?tab=repositories">
+					<a className="about-me__link" href="https://github.com/Temav31?tab=repositories" target="_blank" rel="noopener noreferrer">
 						Github
 					</a>
 				</div>

@@ -1,4 +1,4 @@
-.promo{
+.promo {
 	background-color: #465DFF;
 }
 
@@ -13,7 +13,7 @@
 	margin-bottom: 38px;
 }
 
-.promo__head {
+.promo__header {
 	color: #FFF;
 	text-align: center;
 	font-size: 31px;
@@ -22,19 +22,22 @@
 	line-height: 39px;
 	letter-spacing: -1.24px;
 	margin: 0;
+	padding: 0 10px;
 }
 
 /* на средний размер */
 @media (min-width: 768px) {
 	.promo__container {
 		background-size: 320px;
-		height: 784px;
-		margin-bottom: 9px;
+		height: 765px;
+		margin-bottom: 18px;
 	}
-	.promo__head {
+
+	.promo__header {
 		font-size: 50px;
 		line-height: 58px;
 		letter-spacing: -2px;
+		padding: 0 19px;
 	}
 }
 
@@ -42,11 +45,12 @@
 @media (min-width: 1280px) {
 	.promo__container {
 		background-size: 320px;
-		height: 524px;
-		margin-bottom: 20px;
+		height: 490px;
+		margin-bottom: 35px;
 	}
-	.promo__head {
-		padding: 0;
+
+	.promo__header {
+		padding: 0 275px;
 		margin: 0 auto;
 	}
 }

@@ -3,7 +3,7 @@ import "./Header.css";
 import React from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 // 
-import Logo from "../../images/logo.png";
+import Logo from "../../images/logo1.svg";
 import Navigation from "../Navigation/Navigation";
 import Menu from "../Menu/Menu";
 const Header = (props) => {

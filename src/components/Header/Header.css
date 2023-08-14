@@ -6,13 +6,18 @@
 	align-items: center;
 	justify-content: space-between;
 }
-.header__not-login{
+
+.header__not-login {
 	background-color: #465DFF;
 }
 
 .header__link {
 	height: 38px;
 	width: 38px;
+}
+
+.header__link:hover {
+	opacity: 0.7;
 }
 
 .header__image {
@@ -47,10 +52,12 @@
 	.header {
 		padding: 18px 30px;
 	}
+
 	.header__sign-up {
 		font-size: 12px;
 		padding-right: 30px;
 	}
+
 	.header__sign-in {
 		font-size: 12px;
 		padding: 8px 20px;

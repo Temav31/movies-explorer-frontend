@@ -11,12 +11,12 @@ const Footer = () => {
 			<div className="footer__box">
 				<ul className="footer__container">
 					<li>
-						<a className="footer__link" href='https://practicum.yandex.ru'>
+						<a className="footer__link" href='https://practicum.yandex.ru' target="_blank" rel="noopener noreferrer">
 							Яндекс.Практикум
 						</a>
 					</li>
 					<li>
-						<a className="footer__link" href='https://github.com/Temav31?tab=repositories'>
+						<a className="footer__link" href='https://github.com/Temav31?tab=repositories' target="_blank" rel="noopener noreferrer">
 							Github
 						</a>
 					</li>

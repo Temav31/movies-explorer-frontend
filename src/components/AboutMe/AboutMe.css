@@ -112,7 +112,7 @@
 /* на максимальный размер */
 @media (min-width: 1280px) {
 	.about-me {
-		padding: 110px 70px 125px 70px;
+		padding: 110px 70px 100px 70px;
 	}
 
 	.about-me__container {

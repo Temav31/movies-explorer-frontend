@@ -8,7 +8,7 @@ const Promo = () => {
 	return (
 		<section className='promo'>
 			<div  className="promo__container">
-			<h2 id="promo" className="promo__head">
+			<h2 id="promo" className="promo__header">
 				Учебный проект студента факультета Веб-разработки.
 			</h2>
 			</div>

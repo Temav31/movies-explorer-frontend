@@ -34,7 +34,7 @@
 }
 
 /* на максимальном размер */
-@media (min-width: 1280px) {
+/* @media (min-width: 1280px) {
 	.navtab {
 		padding: 26px 502px 24px;
 	}
@@ -42,4 +42,4 @@
 	.navtab__link {
 		font-size: 13px;
 	}
-}
+} */

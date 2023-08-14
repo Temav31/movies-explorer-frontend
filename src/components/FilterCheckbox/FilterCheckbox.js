@@ -7,7 +7,7 @@ const FilterCheckbox = () => {
 	return (
 		<div className="filter-checkbox">
 			<label className="filter-checkbox__ladel">
-				<input className="filter-checkbox__input" placeholder="Фильм" required />
+				<input className="filter-checkbox__input" placeholder="Фильм" type="checkbox" />
 				<span className="filter-checkbox__span" type="submit">
 				</span>
 			</label>
