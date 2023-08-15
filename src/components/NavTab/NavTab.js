@@ -5,8 +5,8 @@ import "./NavTab.css";
 import React from "react";
 const NavTab = () => {
 	return (
-		<div className="navtb">
-			<div className="navtab">
+		<div className="navtab">
+			<div className="navtab__container">
 				<a className="navtab__link" href="#about-project">
 					О проекте
 				</a>

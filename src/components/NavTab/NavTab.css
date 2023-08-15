@@ -1,10 +1,15 @@
-.navtab {
+.navtab{
 	background-color: #F5F5F5;
+	width: 100%;
+}
+.navtab__container {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
 	padding: 25px 53px;
+	margin: 0 auto;
+	max-width: 220px;
 }
 
 .navtab__link {
@@ -24,8 +29,10 @@
 
 /* на средний размер */
 @media (min-width: 768px) {
-	.navtab {
+	.navtab__container {
 		padding: 26px 246px 24px;
+		max-width: 276px;
+
 	}
 
 	.navtab__link {
@@ -34,12 +41,12 @@
 }
 
 /* на максимальном размер */
-/* @media (min-width: 1280px) {
-	.navtab {
+@media (min-width: 1280px) {
+	.navtab__container {
 		padding: 26px 502px 24px;
 	}
 
 	.navtab__link {
 		font-size: 13px;
 	}
-} */
+}

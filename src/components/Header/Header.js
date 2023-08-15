@@ -1,7 +1,7 @@
 // импорт стилей
 import "./Header.css";
 import React from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 // 
 import Logo from "../../images/logo1.svg";
 import Navigation from "../Navigation/Navigation";

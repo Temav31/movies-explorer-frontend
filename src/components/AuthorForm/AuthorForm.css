@@ -6,9 +6,15 @@
 	/* align-items: center; */
 }
 
+.author-form__link-logo {
+	margin: 0 auto;
+}
+
 .author-form__image {
 	width: 38px;
 	height: 38px;
+	margin: 0 auto;
+
 }
 
 .author-form__header {
@@ -128,6 +134,10 @@
 		padding: 232px 0;
 		width: 396px;
 		margin: 0 auto;
+	}
+
+	.author-form__link-logo {
+		margin: 0;
 	}
 
 	.author-form__link {

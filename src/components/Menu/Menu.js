@@ -33,7 +33,7 @@ const Menu = () => {
 					Сохранённые фильмы
 					</Link>
 				</div>
-				<Link className="menu__link-button">
+				<Link className="menu__link-button" to="/profile">
 					Аккаунт
 				</Link>
 				</div>

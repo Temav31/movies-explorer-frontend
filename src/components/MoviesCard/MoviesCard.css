@@ -69,7 +69,8 @@
 
 
 .movie-card__delete {
-	background-image: url(../../images/Delete.png);
+	/* background-image: url(../../images/Delete.png); */
+	background-image: url(../../images/Delete.svg);
 	background-size: 14px;
 	width: 14px;
 	height: 14px;
