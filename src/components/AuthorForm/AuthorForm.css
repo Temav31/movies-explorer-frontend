@@ -1,0 +1,175 @@
+.author-form {
+	padding: 56px 30px 30px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	/* align-items: center; */
+}
+
+.author-form__link-logo {
+	margin: 0 auto;
+}
+
+.author-form__image {
+	width: 38px;
+	height: 38px;
+	margin: 0 auto;
+
+}
+
+.author-form__header {
+	text-align: center;
+	font-size: 24px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: normal;
+	padding: 47px 0 80px;
+	margin: 0;
+}
+
+.author-form__form {
+	/* padding-bottom: 246px; */
+	height: 423px;
+}
+
+.author-form__label {
+	display: flex;
+	flex-direction: column;
+	padding-bottom: 15px;
+}
+
+.author-form__span {
+	color: #A0A0A0;
+	font-size: 10px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	padding-bottom: 10px;
+}
+
+.author-form__input {
+	color: #000;
+	font-size: 13px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: normal;
+	background-color: #F9F9F9;
+	border-radius: 8px;
+	border: none;
+	padding: 15px;
+	/* margin-bottom: 5px; */
+}
+
+/* .author-form__input:last-child {
+	padding-bottom: 0;
+} */
+
+.author-form__error-text {
+	color: #EE3465;
+	font-size: 10px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	/* margin: 0; */
+	/* padding-top: 5px; */
+	margin-top: 6px;
+}
+
+.author-form__button {
+	background-color: #FF6838;
+	border-radius: 3px;
+	color: #FFF;
+	text-align: center;
+	font-family: Inter;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: normal;
+	/* padding: 15px 113px 15px 111px; */
+	padding: 15px 0;
+	border: none;
+	cursor: pointer;
+}
+
+.author-form__button:hover {
+	opacity: 0.7;
+}
+
+.author-form__container {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 7px;
+	padding-top: 14px;
+
+}
+
+.author-form__text {
+	color: #A0A0A0;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	margin: 0;
+}
+
+.author-form__link {
+	color: #FF6838;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	text-decoration: none;
+	margin: 0;
+}
+
+.author-form__link:hover {
+	opacity: 0.7;
+}
+
+/* на средний размер */
+@media (min-width: 768px) {
+	.author-form {
+		padding: 232px 0;
+		width: 396px;
+		margin: 0 auto;
+	}
+
+	.author-form__link-logo {
+		margin: 0;
+	}
+
+	.author-form__link {
+		text-align: start;
+	}
+
+	.author-form__header {
+		text-align: start;
+		padding: 39px 0;
+	}
+
+	.author-form__form {
+		height: 335px;
+	}
+
+
+	.author-form__button {
+		font-size: 14px;
+	}
+
+	.author-form__text {
+		font-size: 14px;
+	}
+
+	.author-form__link {
+		font-size: 14px;
+	}
+}
+
+/* на максимальный размер */
+@media (min-width: 1280px) {
+	.author-form {
+		padding: 70px 0;
+	}
+}

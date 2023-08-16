@@ -1,0 +1,149 @@
+.menu__off {
+	display: none;
+}
+
+.menu__header {
+	background-image: url(../../images/Menu.svg);
+	width: 40px;
+	height: 43px;
+
+}
+
+.menu__on {
+	visibility: visible;
+	transition-duration: 1s;
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: center;
+	position: fixed;
+	top: 0;
+	right: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	width: 100%;
+	height: 100%;
+	z-index: 2;
+}
+
+.menu__box {
+	background-color: white;
+	height: 780px;
+	/* width: 320px; */
+	width: 100%;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+}
+
+.menu__image {}
+
+.menu__button {
+	background-color: transparent;
+	background-size: 40px;
+	border: none;
+	width: 22px;
+	height: 22px;
+	padding: 0;
+	position: absolute;
+	top: 22px;
+	right: 22px;
+}
+
+.menu__container {
+	padding: 145px 0 444px;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	/* justify-content: center; */
+}
+
+.menu__link {
+	color: #000;
+	text-align: center;
+	font-feature-settings: 'clig' off, 'liga' off;
+	font-size: 18px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: normal;
+	text-decoration: none;
+	margin: 0;
+	padding: 0 0 24px;
+}
+
+.menu__link:last-child {
+	padding: 15px 0 0;
+}
+
+.menu__link-movies {
+	width: 72px;
+	padding-bottom: 7px;
+	border-bottom: 2px solid #000;
+}
+
+.menu__link-button {
+	color: #000;
+	text-align: center;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 16px;
+	margin: 0 auto;
+	padding: 8px 20px;
+	border-radius: 20px;
+	background-color: #F9F9F9;
+	/* background-color: red; */
+	text-decoration: none;
+	width: 60px;
+	height: 16px;
+}
+
+/* на средний размер */
+@media (min-width: 768px) {
+	.menu__on {
+		align-items: end;
+		background-color: rgba(0, 0, 0, 0.5);
+		width: 100%;
+		height: 100%;
+	}
+
+	.menu__box {
+		height: 1024px;
+		width: 520px;
+	}
+
+	.menu__button {
+		top: 22px;
+		right: 32px;
+	}
+
+	.menu__container {
+		padding: 160px 0 621px;
+	}
+
+	.menu__link {
+		padding: 0 0 28px;
+	}
+
+	.menu__link:last-child {
+		padding: 22px 0 0;
+	}
+
+	.menu__link-movies {
+		margin: 0;
+		width: 72px;
+		padding-bottom: 4px;
+		border-bottom: 2px solid #000;
+	}
+}
+
+/* на максимальный размер */
+@media (min-width: 1280px) {
+	.menu__on {
+		display: none;
+	}
+
+	.menu__header {
+		display: none;
+	}
+}

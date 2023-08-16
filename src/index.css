@@ -1,0 +1,3 @@
+@import url(./vendor/normalize.css);
+/* подключение стилей шрифта */
+@import url(./vendor/fonts/inter.css);
