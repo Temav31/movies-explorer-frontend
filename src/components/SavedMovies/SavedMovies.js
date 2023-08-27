@@ -7,17 +7,47 @@ import SearchForm from "../SearchForm/SearchForm";
 // импорт базовых
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
+// загрузка
+import Preloader from "../Preloader/Preloader";
+
 const SavedMovies = (props) => {
+	const {
+		isLogin,
+		isAddMovies,
+		isDeleteMovies,
+		isClick,
+		isSearch,
+		isSave,
+		isFound,
+		preloader,
+		message,
+	} = props;
 	return (
 		<>
-		<Header />
-		{/* Основной бллок */}
-		<main>
-			<SearchForm />
-			<MoviesCardList />
-		</main>
-		{/* Конец основного блока */}
-		<Footer />
+			<Header
+				isLogin={isLogin}
+			/>
+			{/* Основной бллок */}
+			<main>
+				<SearchForm
+					isSearch={isSearch}
+					isClick={isClick}
+				/>
+				{preloader ? (
+					<Preloader />
+				) : (
+					<MoviesCardList
+						isFound={isFound}
+						isSave={isSave}
+						isAddMovies={isAddMovies}
+						isDeleteMovies={isDeleteMovies}
+						message={message}
+					/>
+				)
+				}   
+			</main>
+			{/* Конец основного блока */}
+			<Footer />
 		</>
 	);
 };
