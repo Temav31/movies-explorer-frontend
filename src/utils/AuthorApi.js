@@ -62,6 +62,6 @@ class AuthorApi {
 	}
 }
 // класс апи 
-// const auth = new AuthorApi(MAIN_URL);
-const auth = new AuthorApi('http://localhost:3000');
+const auth = new AuthorApi(MAIN_URL);
+// const auth = new AuthorApi('http://localhost:3000');
 export default auth;

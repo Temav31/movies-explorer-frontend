@@ -44,8 +44,12 @@ const MoviesCard = (props) => {
 			onDelete(movie);
 		} else {
 			console.log(isValue);
+			if(saveValue){
+				handleSave();
+			} else {
+				handleDelete();
+			}
 			setSaveValue(!saveValue);
-			handleSave();
 		}
 	}
 	let imageUrl;
@@ -72,7 +76,7 @@ const MoviesCard = (props) => {
 					</p>
 				</div>
 				<button className={`movie-card__save 
-				${isValue ? "movie-card__save-active"
+				${saveValue ? "movie-card__save-active"
 						: ""
 					}
 				${location.pathname === "/saved-movies"
