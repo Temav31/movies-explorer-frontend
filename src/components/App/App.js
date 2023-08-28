@@ -99,8 +99,9 @@ const App = () => {
 		setАuthoriz(false);
 		localStorage.clear();
 		navigate("/");
-		// setMoviesList([]);
-		// setSearchMoviesList([]);
+		setMoviesList([]);
+		setSearchMoviesList([]);
+		setMoviesList([]);
 	};
 	// функции для редактирования данных
 	function handleUpdateUser(newData) {
