@@ -11,13 +11,13 @@ const ValidationForm = (data = {}) => {
 		const target = event.target;
 		const data = target.closest("form").checkValidity();
 		setFormValid(data);
-		console.log(formValid);
+		console.log(dataUser);
 	}
 	const clearForm = useCallback(
 		(clearData = {}, clearValid = false) => {
 			setFormValid(clearValid);
 			setErrorsText(clearData);
-			setDataUser(false);
+			setDataUser(clearData);
 		},
 		[setDataUser, setErrorsText, setFormValid]
 	);
