@@ -1,8 +1,8 @@
 export const MOVIES_URL = "https://api.nomoreparties.co/";
 
-export const MAIN_URL = "https://api.work.tema.nomoredomains.work";
+// export const MAIN_URL = "http://api.work.tema.nomoredomains.work";
 // const auth = new AuthorApi('http://localhost:3000');
-// export const MAIN_URL = "http://localhost:3000";
+export const MAIN_URL = "http://localhost:3000";
 // патерны
 export const patternUrl = new RegExp(/^(https?:\/\/)+[^\s]*/);
 

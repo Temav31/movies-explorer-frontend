@@ -165,7 +165,7 @@ const App = () => {
 						localStorage.setItem('loadMovies', JSON.stringify(data));
 						// setError("");
 					} else {
-						setError("По запросу ничего не найдено!");
+						setError("Ничего не найдено");
 					}
 				})
 				.catch((err) => {
@@ -181,7 +181,7 @@ const App = () => {
 			console.log(foundMovies);
 			if (foundMovies.lenght === []) {
 				console.log("hi");
-				setError("По запросу ничего не найдено!");
+				setError("");
 			} else {
 				localStorage.setItem('name', film);
 				localStorage.setItem('foundMovies', JSON.stringify(foundMovies));
@@ -189,7 +189,7 @@ const App = () => {
 
 				setSearchMoviesList(foundMovies);
 				console.log(foundMovies.lenght);
-				setError("fgnsfgbn");
+				setError("Ничего не найдено");
 			}
 		}
 	};
@@ -252,7 +252,7 @@ const App = () => {
 		} else {
 			setLoading(false);
 			setSaveMovies([]);
-			setError("По  ничего не найдено!");
+			setError("Ничего не найдено");
 		}
 	};
 	// функция проверка короткометраждек в сохр фильмах

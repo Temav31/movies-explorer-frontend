@@ -45,9 +45,9 @@ const MoviesCard = (props) => {
 		} else {
 			console.log(isValue);
 			if(saveValue){
-				handleSave();
-			} else {
 				handleDelete();
+			} else {
+				handleSave();
 			}
 			setSaveValue(!saveValue);
 		}
