@@ -111,6 +111,14 @@
 	/* padding-top: 5px; */
 	margin-top: 6px;
 }
+.profile__success{
+	text-align: center;
+	color: #000;
+	font-size: 15px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+}
 
 /* на средний размер */
 @media (min-width: 768px) {

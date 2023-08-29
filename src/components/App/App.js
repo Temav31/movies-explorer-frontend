@@ -35,6 +35,7 @@ const App = () => {
 	// загрузка
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
+	const [errorMovies, setErrorMovies] = useState("");
 	const [saveFoundMovies, setSaveFoundMovies] = React.useState([]);
 	// пользователь
 	const [currentUser, setCurrentUser] = useState({
@@ -147,8 +148,27 @@ const App = () => {
 	// функция поиска фильмов
 	function handleSearchFilm(film, value) {
 		const short = moviesList.length;
-		// console.log(short);
-		if (short === 0) {
+		console.log(short);
+		setErrorMovies("");
+		console.log("vbdfb");
+		if (short !== 0) {
+			console.log('поиск фильмов');
+			const foundMovies = moviesList.filter((item) => item.nameRU.toLowerCase().includes(film.toLowerCase()));
+			const number = foundMovies.length;
+			console.log(foundMovies);
+			console.log(number);
+			if (number === 0) {
+				console.log("hi");
+				setErrorMovies("Ничего не найдено");
+			} else {
+				localStorage.setItem('name', film);
+				localStorage.setItem('foundMovies', JSON.stringify(foundMovies));
+				localStorage.setItem('status', JSON.stringify(value));
+
+				setSearchMoviesList(foundMovies);
+				setErrorMovies("");
+			}
+		} else {
 			console.log("получение фильмоф");
 			setLoading(true);
 			MoviesApi.getMovies()
@@ -164,9 +184,9 @@ const App = () => {
 						localStorage.setItem('foundMovies', JSON.stringify(foundMovies));
 						localStorage.setItem('status', JSON.stringify(value));
 						localStorage.setItem('loadMovies', JSON.stringify(data));
-						// setError("");
+						// setError("a");
 					} else {
-						setError("Ничего не найдено");
+						setErrorMovies("Ничего не найдено");
 					}
 				})
 				.catch((err) => {
@@ -175,23 +195,6 @@ const App = () => {
 				.finally(() => {
 					setLoading(false);
 				})
-		} else {
-			console.log('поиск фильмов');
-			const foundMovies = moviesList.filter((item) => item.nameRU.toLowerCase().includes(film.toLowerCase()));
-			// let film = foundMovies.lenght;
-			console.log(foundMovies);
-			if (foundMovies.lenght === []) {
-				console.log("hi");
-				setError("");
-			} else {
-				localStorage.setItem('name', film);
-				localStorage.setItem('foundMovies', JSON.stringify(foundMovies));
-				localStorage.setItem('status', JSON.stringify(value));
-
-				setSearchMoviesList(foundMovies);
-				console.log(foundMovies.lenght);
-				setError("Ничего не найдено");
-			}
 		}
 	};
 	// функция проверка короткометраждек в сохр фильмах
@@ -210,7 +213,7 @@ const App = () => {
 		console.log("сохранение");
 		MainApi.addMovie(data)
 			.then((newMovie) => {
-				console.log(saveMovies);
+				// console.log(saveMovies);
 				setSaveMovies(saveMovies.concat(newMovie));
 				setSaveList(saveList.concat(newMovie));
 			})
@@ -244,7 +247,10 @@ const App = () => {
 	// функция поиска в сохрангённых фильмах
 	function handleSaveSearchFilm(film) {
 		setLoading(true);
-		const foundMovies = saveMovies.filter((item) => item.nameRU.toLowerCase().includes(film.toLowerCase()));
+		console.log(saveMovies);
+		console.log(saveList);
+		setError("");
+		const foundMovies = saveList.filter((item) => item.nameRU.toLowerCase().includes(film.toLowerCase()));
 		if (foundMovies.length !== 0) {
 			setLoading(false);
 			setSaveFoundMovies(foundMovies);
@@ -267,7 +273,6 @@ const App = () => {
 				setSaveMovies(saveFoundMovies);
 			}
 	};
-
 	return (
 		<CurrentUserContext.Provider value={currentUser}>
 			<div className="page">
@@ -293,7 +298,7 @@ const App = () => {
 						element={<NotFound />}
 					/>
 					<Route
-						path="/movies/*"
+						path="/movies"
 						element={
 							<ProtectedRoute
 								// isLogin={true}
@@ -306,7 +311,7 @@ const App = () => {
 								isSave={saveList}
 								isFound={searchMoviesList}
 								preloader={loading}
-								message={error}
+								message={errorMovies}
 							/>
 						}
 					/>

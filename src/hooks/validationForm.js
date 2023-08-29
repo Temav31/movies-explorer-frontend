@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
-const ValidationForm = (data = {}) => {
+const ValidationForm = () => {
 	const [formValid, setFormValid] = useState(false);
-	const [dataUser, setDataUser] = useState(data);
+	const [dataUser, setDataUser] = useState({});
 	const [errorsText, setErrorsText] = useState({});
 	// проверка изменений
 	const handleChangeLogin = (event) => {

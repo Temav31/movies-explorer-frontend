@@ -90,7 +90,7 @@ const Profile = ({ isExite, isLogin, onUpdateUser }) => {
 									required=""
 								/>
 							</div>
-							<span className="">
+							<span className="profile__success">
 								{text ?? ""}
 							</span>
 						<button className="profile__link" type="submit">

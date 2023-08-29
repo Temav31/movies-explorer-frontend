@@ -105,7 +105,6 @@ const MoviesCardList = (props) => {
 		<section>
 			<p className="movies-cardlist__text">
 				{message ? message : ""}
-				{/* {message} */}
 				</p>
 			<div className={`movies-cardlist
 		${location.pathname === "/saved-movies"

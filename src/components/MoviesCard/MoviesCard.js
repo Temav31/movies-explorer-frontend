@@ -3,9 +3,6 @@ import { useLocation } from "react-router-dom";
 // импорт стилей
 import "./MoviesCard.css";
 // импорт блоков
-// фотоimport 
-// import Picture from "../../images/Card-pic1.png";
-
 import { getLenghtMovie, serverUrl } from "../../utils/constant";
 
 // импорт базовых
@@ -36,7 +33,7 @@ const MoviesCard = (props) => {
 		if (location.pathname !== "/movies") {
 			onDelete(isValue);
 		} else {
-			onDelete(movie);
+			onDelete(isValue);
 		}
 	};
 	function handleChange() {

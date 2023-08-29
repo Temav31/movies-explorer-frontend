@@ -35,7 +35,7 @@ const SearchForm = (props) => {
 	const location = useLocation();
 	React.useEffect(() => {
 		if (location.pathname === '/saved-movies') {
-			const value = JSON.parse(localStorage.getItem('statusSaved'));
+			const value = JSON.parse(localStorage.getItem('status'));
 			setShortMovies(value);
 			isClick(value);
 		}
@@ -45,6 +45,7 @@ const SearchForm = (props) => {
 			const value = JSON.parse(localStorage.getItem('status'));
 			// console.log(value);
 			setShortMovies(value);
+			// isClick(value);
 		}
 	}, [location]);
 	function handleChange(e) {

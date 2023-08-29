@@ -6,32 +6,32 @@ import ValidationForm from "../../hooks/validationForm";
 
 import React from "react";
 const Register = ({ isRegister }) => {
-	// const { formValid, handleChangeLogin, clearForm, dataUser, errorsText } = ValidationForm({ name: '', password: '', email: '' });
-	// function handleSubmit(event) {
-	// 	console.log(dataUser);
-	// 	event.preventDefault();
-	// 	isRegister({
-	// 		name: dataUser.name,
-	// 		email: dataUser.email,
-	// 		password: dataUser.password,
-	// 	});
-	// 	clearForm();
-	// }
-	const [dataUser, setDataUser] = React.useState({ email: '', password: '' });
-	const [formValid, setFormValid] = React.useState(false);
-	const [errorsText, setErrorsText] = React.useState({});
-    function handleSubmit(event) {
-        event.preventDefault();
-        isRegister(dataUser);
-    }
-    function handleChange(event) {
-		const { name, value } = event.target;
-		setDataUser({ ...dataUser, [name]: value });
-		setErrorsText({ ...errorsText, [name]: event.target.validationMessage });
-		const target = event.target;
-		const data = target.closest("form").checkValidity();
-		setFormValid(data);
-    }
+	const { formValid, handleChangeLogin, dataUser, errorsText } = ValidationForm();
+	function handleSubmit(event) {
+		console.log(dataUser);
+		event.preventDefault();
+		isRegister({
+			name: dataUser.name,
+			email: dataUser.email,
+			password: dataUser.password,
+		});
+		// clearForm();
+	}
+	// const [dataUser, setDataUser] = React.useState({ email: '', password: '' });
+	// const [formValid, setFormValid] = React.useState(false);
+	// const [errorsText, setErrorsText] = React.useState({});
+    // function handleSubmit(event) {
+    //     event.preventDefault();
+    //     isRegister(dataUser);
+    // }
+    // function handleChange(event) {
+	// 	const { name, value } = event.target;
+	// 	setDataUser({ ...dataUser, [name]: value });
+	// 	setErrorsText({ ...errorsText, [name]: event.target.validationMessage });
+	// 	const target = event.target;
+	// 	const data = target.closest("form").checkValidity();
+	// 	setFormValid(data);
+    // }
 	return (
 		<AuthorForm
 			className="author-form"
@@ -53,8 +53,9 @@ const Register = ({ isRegister }) => {
 						type="text"
 						name="name"
 						required
+						minLength={2}
 						value={dataUser.name}
-						onChange={handleChange}
+						onChange={handleChangeLogin}
 					/>
 					<span className="author-form__error-text">
 						{errorsText[`name`]}
@@ -70,7 +71,7 @@ const Register = ({ isRegister }) => {
 						name="email"
 						required
 						value={dataUser.email}
-						onChange={handleChange}
+						onChange={handleChangeLogin}
 					/>
 					<span className="author-form__error-text">
 						{errorsText[`email`]}
@@ -86,7 +87,7 @@ const Register = ({ isRegister }) => {
 						name="password"
 						required
 						value={dataUser.password}
-						onChange={handleChange}
+						onChange={handleChangeLogin}
 					/>
 					<span className="author-form__error-text">
 						{errorsText[`password`]}
