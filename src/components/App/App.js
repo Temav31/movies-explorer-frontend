@@ -290,7 +290,7 @@ const App = () => {
 						element={<NotFound />}
 					/>
 					<Route
-						path="/movies"
+						path="/movies/*"
 						element={
 							<ProtectedRoute
 								// isLogin={true}
@@ -308,7 +308,7 @@ const App = () => {
 						}
 					/>
 					<Route
-						path="/saved-movies"
+						path="/saved-movies/*"
 						element={
 							<ProtectedRoute
 								// isLogin={true}

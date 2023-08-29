@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import "./MoviesCard.css";
 // импорт блоков
 import { getLenghtMovie, serverUrl } from "../../utils/constant";
+// import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 // импорт базовых
 const MoviesCard = (props) => {
@@ -18,7 +19,7 @@ const MoviesCard = (props) => {
 	// сохраненные фильмы
 	const isValue = isSave.find((element) => element.moveId === movie.id);
 	const [saveValue, setSaveValue] = React.useState(false);
-	// сохранение фильмов
+	console.log(isValue);
 	function handleSave() {
 		// setSaveValue(!saveValue);
 		if (isValue) {
