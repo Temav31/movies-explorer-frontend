@@ -148,27 +148,8 @@ const App = () => {
 	// функция поиска фильмов
 	function handleSearchFilm(film, value) {
 		const short = moviesList.length;
-		console.log(short);
 		setErrorMovies("");
-		console.log("vbdfb");
-		if (short !== 0) {
-			console.log('поиск фильмов');
-			const foundMovies = moviesList.filter((item) => item.nameRU.toLowerCase().includes(film.toLowerCase()));
-			const number = foundMovies.length;
-			console.log(foundMovies);
-			console.log(number);
-			if (number === 0) {
-				console.log("hi");
-				setErrorMovies("Ничего не найдено");
-			} else {
-				localStorage.setItem('name', film);
-				localStorage.setItem('foundMovies', JSON.stringify(foundMovies));
-				localStorage.setItem('status', JSON.stringify(value));
-
-				setSearchMoviesList(foundMovies);
-				setErrorMovies("");
-			}
-		} else {
+		if (short === 0) {
 			console.log("получение фильмоф");
 			setLoading(true);
 			MoviesApi.getMovies()
@@ -176,15 +157,11 @@ const App = () => {
 					const foundMovies = data.filter((item) => item.nameRU.toLowerCase().includes(film.toLowerCase()));
 					// console.log(foundMovies);					
 					if (foundMovies.lenght !== 0) {
-						// console.log(moviesList.length);
-						setMoviesList(data);
-						// console.log(moviesList.length);
 						setSearchMoviesList(foundMovies);
 						localStorage.setItem('name', film);
 						localStorage.setItem('foundMovies', JSON.stringify(foundMovies));
 						localStorage.setItem('status', JSON.stringify(value));
 						localStorage.setItem('loadMovies', JSON.stringify(data));
-						// setError("a");
 					} else {
 						setErrorMovies("Ничего не найдено");
 					}
@@ -195,6 +172,20 @@ const App = () => {
 				.finally(() => {
 					setLoading(false);
 				})
+		} else {
+			console.log('поиск фильмов');
+			const foundMovies = moviesList.filter((item) => item.nameRU.toLowerCase().includes(film.toLowerCase()));
+			const number = foundMovies.length;
+			if (number === 0) {
+				setErrorMovies("Ничего не найдено");
+			} else {
+				localStorage.setItem('name', film);
+				localStorage.setItem('foundMovies', JSON.stringify(foundMovies));
+				localStorage.setItem('status', JSON.stringify(value));
+
+				setSearchMoviesList(foundMovies);
+				console.log(foundMovies.lenght);
+			}
 		}
 	};
 	// функция проверка короткометраждек в сохр фильмах
