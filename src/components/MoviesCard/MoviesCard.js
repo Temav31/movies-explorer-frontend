@@ -33,7 +33,7 @@ const MoviesCard = (props) => {
 		if (location.pathname !== "/movies") {
 			onDelete(isValue);
 		} else {
-			onDelete(isValue);
+			onDelete(movie);
 		}
 	};
 	function handleChange() {

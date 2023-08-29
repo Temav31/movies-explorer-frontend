@@ -178,6 +178,7 @@ const App = () => {
 			const number = foundMovies.length;
 			if (number === 0) {
 				setErrorMovies("Ничего не найдено");
+				setSearchMoviesList(foundMovies);
 			} else {
 				localStorage.setItem('name', film);
 				localStorage.setItem('foundMovies', JSON.stringify(foundMovies));
