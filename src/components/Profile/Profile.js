@@ -147,7 +147,7 @@ const Profile = ({ isExite, isLogin, onUpdateUser, block }) => {
 							!formValue ? "profile__link_disabled" : ""
 						}`} 
 						type="submit"
-						disabled={formValue}
+						disabled={!formValue}
 						>
 							Редактировать
 						</button>
