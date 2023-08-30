@@ -77,10 +77,10 @@ const Profile = ({ isExite, isLogin, onUpdateUser, block }) => {
 	useEffect(() => {
 		const validName = currentUser.name === name;
 		const validEmail = currentUser.email === email;
-		if (!validName &&
-			!validEmail &&
-			nameValidation &&
-			emailValidation) {
+		const valid = validEmail && validName;
+		const validInput = nameValidation || emailValidation;
+		// console.log(emailValidation);
+		if (!valid && validInput) {
 			setFormValue(true);
 		} else {
 			setFormValue(false);
@@ -120,6 +120,9 @@ const Profile = ({ isExite, isLogin, onUpdateUser, block }) => {
 								disabled={block}
 							/>
 						</div>
+						<span className="profile__success">
+							{errName}
+						</span>
 						<div className="profile__item">
 							<p className="profile__text-info">
 								E-mail
@@ -138,9 +141,14 @@ const Profile = ({ isExite, isLogin, onUpdateUser, block }) => {
 							/>
 						</div>
 						<span className="profile__success">
-							{/* {text ?? ""} */}
+							{errEmail}
 						</span>
-						<button className="profile__link" type="submit">
+						<button className={`profile__link  ${
+							!formValue ? "profile__link_disabled" : ""
+						}`} 
+						type="submit"
+						disabled={formValue}
+						>
 							Редактировать
 						</button>
 					</form>
