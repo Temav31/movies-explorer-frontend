@@ -74,12 +74,16 @@
 	font-weight: 400;
 	line-height: normal;
 	text-decoration: none;
-	margin: 363px auto 16px;
-	padding: 0 auto;
+	/* margin: 363px auto 16px; */
+	padding:  auto;
 	background-color: transparent;
-	margin: 0;
+	margin: auto;
 	width: 150px;
 	border: none;
+}
+.profile__link_disabled{
+	color: #EE3465;
+
 }
 
 .profile__link:hover {
@@ -112,9 +116,10 @@
 	margin-top: 6px;
 }
 .profile__success{
-	text-align: center;
-	color: #000;
-	font-size: 15px;
+	text-align: end;
+	color: #EE3465;
+	/* color: #000; */
+	font-size: 10px;
 	font-style: normal;
 	font-weight: 400;
 	line-height: normal;
