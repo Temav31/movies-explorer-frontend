@@ -2,34 +2,72 @@
 // import "./Login.css";
 import AuthorForm from "../AuthorForm/AuthorForm";
 // валидация 
-import ValidationForm from "../../hooks/validationForm";
+// import ValidationForm from "../../hooks/useValidationForm";
 
-import React from "react";
-const Login = ({ isLogin }) => {
-	const { formValid, handleChangeLogin, dataUser, errorsText } = ValidationForm();
+import React, { useEffect, useState } from "react";
+// валимдация 
+import {
+	standartEmail,
+	messageEmail
+} from "../../utils/constant";
+
+const Login = ({ isLogin, block }) => {
+	// данные
+	const [passw, setPassw] = useState("");
+	const [email, setEmail] = useState("");
+	// ошибки
+	const [errPassw, setErrPassw] = useState("");
+	const [errEmail, setErrEmail] = useState("");
+	// валидация
+	const [passwValidation, setPasswValidation] = useState(false);
+	const [emailValidation, setEmailValidation] = useState(false);
+	// правильность формы
+	const [formValue, setFormValue] = useState(false);
+	// изменение пароля
+	function handleChangePassword(event) {
+		setErrPassw("");
+		const target = event.target;
+		const passwValue = target.value;
+		setPassw(passwValue);
+		if (target.validity.valid) {
+			setErrPassw(target.validationMessage);
+			setPasswValidation(true);
+		}
+	};
+	// изменения почты
+	function handleChangeEmail(event) {
+		setErrEmail("");
+		const target = event.target;
+		const emailValue = target.value;
+		setEmail(emailValue);
+		setEmailValidation(true);
+		if (target.validity.valid) {
+			if (!standartEmail.test(emailValue)) {
+				setEmailValidation(false);
+				setErrEmail(messageEmail);
+			}
+		} else {
+			setErrEmail(target.validationMessage);
+			setEmailValidation(false);
+		}
+	};
+	// отправка формы 
 	function handleSubmit(event) {
 		event.preventDefault();
 		isLogin({
-			email: dataUser.email,
-			password: dataUser.password,
+			email: email,
+			password: passw,
 		});
-		// clearForm();
 	}
-	// const [dataUser, setDataUser] = React.useState({ email: '', password: '' });
-	// const [formValid, setFormValid] = React.useState(false);
-	// const [errorsText, setErrorsText] = React.useState({});
-    // function handleSubmit(event) {
-    //     event.preventDefault();
-    //     isLogin(dataUser);
-    // }
-    // function handleChange(event) {
-	// 	const { name, value } = event.target;
-	// 	setDataUser({ ...dataUser, [name]: value });
-	// 	setErrorsText({ ...errorsText, [name]: event.target.validationMessage });
-	// 	const target = event.target;
-	// 	const data = target.closest("form").checkValidity();
-	// 	setFormValid(data);
-    // }
+	useEffect(() => {
+		if ( email && passw &&
+			emailValidation && passwValidation) {
+				setFormValue(true);
+		} else { 
+			setFormValue(false);
+		}
+		// console.log(formValue);
+	}, [email, passw, emailValidation, passwValidation]);
 	return (
 		<AuthorForm
 			className="author-form"
@@ -39,7 +77,7 @@ const Login = ({ isLogin }) => {
 			textLink="Регистрация"
 			textButton="Войти"
 			link="/signup"
-			isValid={formValid}
+			isValid={formValue}
 			onSubmit={handleSubmit}
 		>
 			<label className="author-form__label">
@@ -51,11 +89,13 @@ const Login = ({ isLogin }) => {
 					type="email"
 					name="email"
 					required
-					value={dataUser.email}
-					onChange={handleChangeLogin}
+					id='login-email'
+					value={email}
+					onChange={handleChangeEmail}
+					disabled={block}
 				/>
 				<span className="author-form__error-text">
-					{errorsText[`email`]}
+					{errEmail}
 				</span>
 			</label>
 			<label className="author-form__label">
@@ -65,13 +105,15 @@ const Login = ({ isLogin }) => {
 				<input
 					className="author-form__input"
 					type="password"
+					id='login-password'
 					name="password"
 					required
-					value={dataUser.password}
-					onChange={handleChangeLogin}
+					value={passw}
+					onChange={handleChangePassword}
+					disabled={block}
 				/>
 				<span className="author-form__error-text">
-					{errorsText[`password`]}
+					{errPassw}
 				</span>
 			</label>
 		</AuthorForm>

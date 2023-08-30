@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
+import {
+	Route,
+	Routes,
+	useNavigate,
+	Navigate,
+	useHistory,
+	useLocation
+} from "react-router-dom";
 // стили 
 import "./App.css";
 // импорт основных блоков
@@ -10,6 +17,7 @@ import Movies from "../Movies/Movies";
 import Register from "../Register/Register";
 import Profile from "../Profile/Profile";
 import SavedMovies from "../SavedMovies/SavedMovies";
+import InfoTooltip from "../InfoTooltip/InfoTooltip";
 // работа с апи
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 // апи
@@ -24,6 +32,7 @@ import { LENGHT_MOVIE } from '../../utils/constant';
 const App = () => {
 	// навигация 
 	const navigate = useNavigate();
+	const local = useLocation();
 	// авторизация 
 	const [authoriz, setАuthoriz] = React.useState(false);
 	// фильмы 
@@ -37,12 +46,22 @@ const App = () => {
 	const [error, setError] = useState("");
 	const [errorMovies, setErrorMovies] = useState("");
 	const [saveFoundMovies, setSaveFoundMovies] = React.useState([]);
-	// пользователь
+	// ошибки регистрации и авторизации
+	const [errorMessage, setErrorMessage] = React.useState("");
+	const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = React.useState(false);
+	// блокировка формы
+	const [formBlock, setFormBlock] = useState(false);
+	// пользователь 
 	const [currentUser, setCurrentUser] = useState({
 		name: '',
 		email: '',
 		_id: '',
 	});
+	// закрытие попапа
+	function closePopup() {
+		setIsInfoTooltipPopupOpen(false);
+		setErrorMessage("");
+	}
 	React.useEffect(() => {
 		if (!localStorage.getItem("token")) {
 			handleExit();
@@ -50,32 +69,44 @@ const App = () => {
 	}, []);
 	// авторизация 
 	function handleLogin(dataLog) {
+		setFormBlock(true);
 		AuthorApi.login(dataLog)
 			.then((data) => {
 				if (data.token) {
-					console.log(data.token);
-					setАuthoriz(true);
+					console.log("авторизация");
 					localStorage.setItem("token", data.token);
+					setАuthoriz(true);
 					checkToken();
 					navigate("/movies");
+					setErrorMessage("");
 				}
 			})
 			.catch((err) => {
 				console.log(err);
+				setErrorMessage(err.message);
+				setIsInfoTooltipPopupOpen(true);
 			})
+			.finally(() => {
+				setFormBlock(false);
+			});
 	};
 	// регистрация 
 	function handleRegister(data) {
+		setFormBlock(true);
 		AuthorApi.registration(data)
 			.then(() => {
 				handleLogin({
 					email: data.email,
 					password: data.password,
 				});
-				navigate("/movies");
 			})
 			.catch((err) => {
-				console.log(err);
+				console.log("Ошибка регистрации");
+				setErrorMessage(err.message);
+				setIsInfoTooltipPopupOpen(true);
+			})
+			.finally(() => {
+				setFormBlock(false);
 			});
 	};
 	// приверка
@@ -84,41 +115,54 @@ const App = () => {
 	}, []);
 	const checkToken = () => {
 		const token = localStorage.getItem("token");
+		const place = local.pathname;
 		if (token) {
 			MainApi.getProfile()
 				.then((data) => {
 					setCurrentUser(data);
 					// console.log(currentUser);
 					setАuthoriz(true);
+					["/signin", "/signup"].includes(place)
+						? navigate("/movies")
+						: navigate();
 				})
 				.catch((err) => {
 					console.log(`Ошибка: ${err}`);
 				});
-		}
-	};
-	const handleExit = () => {
-		setАuthoriz(false);
-		localStorage.clear();
-		navigate("/");
-		setMoviesList([]);
-		setSearchMoviesList([]);
-		setMoviesList([]);
+		};
 	};
 	// функции для редактирования данных
 	function handleUpdateUser(newData) {
-		// console.log(newData);
+		setFormBlock(true);
 		MainApi.setUserInfo(newData)
 			.then((data) => {
 				setCurrentUser({
 					name: data.name,
 					email: data.email
 				});
-
+				setErrorMessage("");
+				setIsInfoTooltipPopupOpen(true);
 			})
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
+				setErrorMessage(err.message);
+				setIsInfoTooltipPopupOpen(true);
 			})
+			.finally(() => {
+				setFormBlock(false);
+			});
 	};
+	const handleExit = () => {
+		setАuthoriz(false);
+		localStorage.clear();
+		navigate("/");
+		setCurrentUser({
+			name: '',
+			email: '',
+			_id: '',
+		});
+	};
+
 	// работа с карточками 
 	React.useEffect(() => {
 		let id = currentUser._id;
@@ -277,12 +321,12 @@ const App = () => {
 					/>
 					<Route
 						path="/signin"
-						element={authoriz ? <Navigate to="/" /> : <Login isLogin={handleLogin} />}
+						element={authoriz ? <Navigate to="/" /> : <Login isLogin={handleLogin} block={formBlock} />}
 					// element={<Login isLogin={handleLogin} />}
 					/>
 					<Route
 						path="/signup"
-						element={authoriz ? <Navigate to="/" /> : <Register isRegister={handleRegister} />}
+						element={authoriz ? <Navigate to="/" /> : <Register isRegister={handleRegister} block={formBlock} />}
 					// element={<Register isRegister={handleRegister} />}
 					/>
 					<Route
@@ -336,10 +380,16 @@ const App = () => {
 								element={Profile}
 								isExite={handleExit}
 								onUpdateUser={handleUpdateUser}
+								block={formBlock}
 							/>
 						}
 					/>
 				</Routes>
+				<InfoTooltip
+					isOpen={isInfoTooltipPopupOpen}
+					onClose={closePopup}
+					result={errorMessage}
+				/>
 			</div>
 		</CurrentUserContext.Provider>
 	);

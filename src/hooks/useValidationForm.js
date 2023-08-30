@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-const ValidationForm = () => {
+const useValidationForm = () => {
 	const [formValid, setFormValid] = useState(false);
 	const [dataUser, setDataUser] = useState({});
 	const [errorsText, setErrorsText] = useState({});
@@ -23,4 +23,4 @@ const ValidationForm = () => {
 	);
 	return { formValid, handleChangeLogin, clearForm, dataUser, errorsText }
 }
-export default ValidationForm;
+export default useValidationForm;

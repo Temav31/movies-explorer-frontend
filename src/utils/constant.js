@@ -10,15 +10,15 @@ export const LENGHT_MOVIE = 40;
 // узнать длину фильма
 const getLenghtMovie = (duration, movie) => {
 	if (duration < 60) {
-		return `${movie.duration} минут`;
+		return `${movie.duration}м`;
 	} else if (duration === 60) {
-		return `1 час`;
+		return `1ч`;
 	} else if (duration < 120) {
-		return `1 час ${movie.duration - 60} минут`
+		return `1ч${movie.duration - 60}м`
 	} else if (duration === 120) {
-		return `2 часа`
+		return `2ч`
 	}else if (duration < 180) {
-		return `2 часа ${movie.duration - 120} минут`
+		return `2ч${movie.duration - 120}м`
 	}
 }
 // ограничения для изображения карточки
@@ -35,6 +35,11 @@ const SMALL_WIDTH = 320;
 const SMALL_ADD_MOVIES = 2;
 const ADD_MOVIES = 4;
 const serverUrl = "https://api.nomoreparties.co/";
+// валидация и ошибки
+const standartName = /^[a-zA-Z0-9-а-яА-Я\s]+$/;
+const standartEmail =  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const messageName = "В имене содержится недопустимый символ";
+const messageEmail = "Адрес почты некорректен";
 export {
 	getLenghtMovie,
 	MOVIES_LIMIT,
@@ -46,5 +51,9 @@ export {
 	BIG_SEARCH,
 	SMALL_ADD_MOVIES,
 	ADD_MOVIES,
-	serverUrl
+	serverUrl,
+	standartName,
+	standartEmail,
+	messageName,
+	messageEmail
 };

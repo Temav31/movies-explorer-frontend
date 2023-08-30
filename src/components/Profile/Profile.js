@@ -1,47 +1,92 @@
 // импорт стилей
 import "./Profile.css";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 // импорт базовых
 import Header from "../Header/Header";
 // контекст
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 // валидация 
-import ValidationForm from "../../hooks/validationForm";
+// валимдация 
+import {
+	standartName,
+	standartEmail,
+	messageName,
+	messageEmail
+} from "../../utils/constant";
 
-const Profile = ({ isExite, isLogin, onUpdateUser }) => {
-	const { formValid, handleChangeLogin, clearForm, dataUser, errorsText } = ValidationForm({ name: '', email: '' });
-	const [name, setName] = React.useState('');
-	const [email, setEmail] = React.useState('');
-	const [text, setText] = React.useState('');
+const Profile = ({ isExite, isLogin, onUpdateUser, block }) => {
+	// профиль
 	const currentUser = React.useContext(CurrentUserContext);
-
-	// его данные будут использованы в управляемых компонентах.
-	React.useEffect(() => {
-		setName(currentUser.name);
-		setEmail(currentUser.email);
-	}, [currentUser]);
-
-
+	// данные
+	const [name, setName] = useState(currentUser.name);
+	const [email, setEmail] = useState(currentUser.email);
+	// ошибки
+	const [errName, setErrName] = useState("");
+	const [errEmail, setErrEmail] = useState("");
+	// валидация
+	const [nameValidation, setNameValidation] = useState(false);
+	const [emailValidation, setEmailValidation] = useState(false);
+	// правильность формы
+	const [formValue, setFormValue] = useState(false);
+	// изменения имени
+	function handleChangeName(event) {
+		setErrName("");
+		const target = event.target;
+		const nameValue = target.value;
+		setName(nameValue);
+		setNameValidation(true);
+		if (target.validity.valid) {
+			if (!standartName.test(nameValue)) {
+				setNameValidation(false);
+				setErrName(messageName);
+			}
+		} else {
+			setErrName(target.validationMessage);
+			setNameValidation(false);
+		}
+		// console.log(nameValidation);
+	};
+	// изменения почты
+	function handleChangeEmail(event) {
+		setErrEmail("");
+		const target = event.target;
+		const emailValue = target.value;
+		setEmail(emailValue);
+		setEmailValidation(true);
+		if (target.validity.valid) {
+			if (!standartEmail.test(emailValue)) {
+				setEmailValidation(false);
+				setErrEmail(messageEmail);
+			}
+		} else {
+			setErrEmail(target.validationMessage);
+			setEmailValidation(false);
+		}
+		// console.log(emailValidation);
+	};
+	// отправка формы 
 	function handleSubmit(event) {
 		event.preventDefault();
-		console.log(name, email);
 		onUpdateUser({
 			name: name,
 			email: email,
 		});
-		clearForm();
-		setText("Профиль Обновлён");
 	}
-	function handleChangeEmail(event) {
-		setEmail(event.target.value);
-		setText(" ");
-	};
-	function handleChangeName(event) {
-		setName(event.target.value);
-		setText(" ");
-	};
+	useEffect(() => {
+		const validName = currentUser.name === name;
+		const validEmail = currentUser.email === email;
+		if (!validName &&
+			!validEmail &&
+			nameValidation &&
+			emailValidation) {
+			setFormValue(true);
+		} else {
+			setFormValue(false);
+		}
+		// console.log(formValue);
+	}, [name, email, nameValidation, emailValidation]);
 	return (
 		<>
 			<Header
@@ -58,41 +103,43 @@ const Profile = ({ isExite, isLogin, onUpdateUser }) => {
 						name="account"
 						onSubmit={handleSubmit}
 					>
-							<div className="profile__item">
-								<p className="profile__text-info">
-									Имя
-								</p>
-								<input
-									className="profile__input"
-									name="name"
-									type="name"
-									minLength="3"
-									maxLength="64"
-									onChange={handleChangeName}
-									value={name}
-
-									required=""
-								/>
-							</div>
-							<div className="profile__item">
-								<p className="profile__text-info">
-									E-mail
-								</p>
-								<input
-									className="profile__input"
-									name="email"
-									type="email"
-									minLength="3"
-									maxLength="64"
-									onChange={handleChangeEmail}
-									value={email}
-
-									required=""
-								/>
-							</div>
-							<span className="profile__success">
-								{text ?? ""}
-							</span>
+						<div className="profile__item">
+							<p className="profile__text-info">
+								Имя
+							</p>
+							<input
+								className="profile__input"
+								name="name"
+								type="name"
+								minLength="3"
+								maxLength="64"
+								onChange={handleChangeName}
+								value={name}
+								id='profile-name'
+								required
+								disabled={block}
+							/>
+						</div>
+						<div className="profile__item">
+							<p className="profile__text-info">
+								E-mail
+							</p>
+							<input
+								className="profile__input"
+								name="email"
+								type="email"
+								minLength="3"
+								maxLength="64"
+								required
+								id='profile-email'
+								value={email}
+								onChange={handleChangeEmail}
+								disabled={block}
+							/>
+						</div>
+						<span className="profile__success">
+							{/* {text ?? ""} */}
+						</span>
 						<button className="profile__link" type="submit">
 							Редактировать
 						</button>

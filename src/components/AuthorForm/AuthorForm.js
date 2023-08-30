@@ -17,7 +17,7 @@ const AuthorForm = (props) => {
 			<h1 className="author-form__header">
 				{title}
 			</h1>
-			<form className="author-form__form" name={`form-${formName}`} onSubmit={onSubmit}>
+			<form className="author-form__form" name={`form-${formName}`} onSubmit={onSubmit} >
 				{children}
 				<button className={`author-form__button ${!isValid ? "author-form__button_closed" : ""}`} type="submit">
 					{textButton}
