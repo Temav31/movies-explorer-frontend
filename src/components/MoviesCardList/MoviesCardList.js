@@ -20,12 +20,13 @@ import MoviesButton from "../MoviesButton/MoviesButton";
 // импорт базовых
 const MoviesCardList = (props) => {
 	const {
-		isFound,
-		isSave,
-		isAddMovies,
-		isDeleteMovies,
-		message,
+		isData,
+		setData,
+		onAddMovies,
+		onDeleteMovies,
+		list,
 	} = props;
+	// console.log(list);
 	const location = useLocation();
 	const [pageWidth, setPageWidth] = React.useState(BIG_WIDTH);
 	// лимит карточек
@@ -50,7 +51,7 @@ const MoviesCardList = (props) => {
 	};
 	// функция обновления ширины
 	function handleUpdateWidth() {
-		console.log(isSave);
+		// console.log(isSave);
 		// isSave.map((item) => {
 		// 	console.log("hi");
 		// })
@@ -66,24 +67,25 @@ const MoviesCardList = (props) => {
 	}
 	// функция заполнения карточек
 	function setCards() {
-		let list = [];
-		isFound.forEach((item, el) => {
+		let films = [];
+		
+		list.forEach((item, el) => {
 			if (el < movieLimit) {
-				list.push(item);
+				films.push(item);
 			}
 		});
-		setCardList(list);
+		setCardList(films);
 	};
 	// функция заполнения найденых карточек
 	function setSearchCards(data) {
 		setMovieLimit(data)
-		let list = [];
-		isFound.forEach((item, el) => {
+		let films = [];
+		list.forEach((item, el) => {
 			if (el < movieLimit) {
-				list.push(item);
+				films.push(item);
 			}
 		});
-		setCardList(list);
+		setCardList(films);
 	};
 	// функция добавления карточек
 	function handleAddMovie() {
@@ -96,50 +98,37 @@ const MoviesCardList = (props) => {
 	// изменение по размеру
 	React.useEffect(() => {
 		handleupdateLimit();
-	}, [pageWidth, isFound, location]);
+	}, [pageWidth, list, location]);
 	React.useEffect(() => {
 		handleAddWidth();
 		return () => handleRemoveWidth();
 	}, [movieLimit]);
+	const short = list.length;
 	return (
 		<section>
 			<p className="movies-cardlist__text">
-				{message ? message : ""}
+				{short === 0  ? "Ничего не найдено" : ""}
 				</p>
 			<div className={`movies-cardlist
 		${location.pathname === "/saved-movies"
 					? "movies-cardlist__empty"
 					: ""
 				} `}>
-				{location.pathname === "/saved-movies" ? (
-					isSave.map((movie) => (
-						<MoviesCard
-							movie={movie}
-							// id={movie.id || movie._id}
-							onSave={isAddMovies}
-							onDelete={isDeleteMovies}
-							isSave={isSave}
-						/>
-					))
-					
-				) : (
-					cardList.map((movie) => (
-						<MoviesCard
-							movie={movie}
-							// id={movie.id || movie._id}
-							onSave={isAddMovies}
-							onDelete={isDeleteMovies}
-							isSave={isSave}
-						/>
-					))
-				)
-				}
+				{list.map((movie) => (
+					<MoviesCard
+						movie={movie}
+						key={movie.id || movie._id}
+						onSave={onAddMovies}
+						onDelete={onDeleteMovies}
+						save={movie.isSave}
+					/>
+				))}
 			</div>
 			{location.pathname === "/movies" ? (
 				<MoviesButton
 					onClick={handleAddMovie}
 					cardList={cardList}
-					isFound={isFound}
+					list={list}
 				/>
 			) : ("")}
 		</section>

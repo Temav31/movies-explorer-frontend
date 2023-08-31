@@ -70,7 +70,7 @@ class MainApi {
 	}
 	// удаление карточки
 	removeMovie(id) {
-		console.log(id);
+		// console.log(id);
 		const token = localStorage.getItem("token");
 		return fetch(`${this._basePath}/movies/${id}`, {
 			method: "DELETE",

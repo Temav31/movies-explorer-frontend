@@ -5,8 +5,8 @@ import React from "react";
 
 const FilterCheckbox = (props) => {
 	const {
-		onCheckbox,
-		valueCheckbox,
+		value,
+		onCheckboxChange,
 	} = props;
 	return (
 		<div className="filter-checkbox">
@@ -15,8 +15,9 @@ const FilterCheckbox = (props) => {
 					className="filter-checkbox__input"
 					placeholder="Фильм"
 					type="checkbox"
-					onChange={onCheckbox}
-					checked={valueCheckbox}
+					onChange={onCheckboxChange}
+					checked={!value}
+					onClick={onCheckboxChange}
 				/>
 				<span className="filter-checkbox__span" type="submit">
 				</span>

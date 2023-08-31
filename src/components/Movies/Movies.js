@@ -13,15 +13,27 @@ import Preloader from "../Preloader/Preloader";
 const Movies = (props) => {
 	const {
 		isLogin,
-		isAddMovies,
-		isDeleteMovies,
-		isClick,
-		isSearch,
-		isSave,
-		isFound,
 		preloader,
-		message,
+		onAddMovies,
+		onDeleteMovies,
+		onClick,
+		onSearch,
+		data,
+		setData,
 	} = props;
+	const [valueCheckbox, setValueCheckbox] = React.useState(JSON.parse(localStorage.getItem("status")));
+	// console.log(valueCheckbox);
+	const list = (valueCheckbox
+		? JSON.parse(localStorage.getItem("foundMovies"))
+		: JSON.parse(localStorage.getItem("movies"))) || [];
+		// console.log(list);
+	function onCheckboxChange() {
+		setValueCheckbox(!valueCheckbox);
+		onClick(list, "movies", !valueCheckbox);
+	};
+	React.useEffect(() => {
+		setData(false);
+	}, [data]);
 	return (
 		<>
 			<Header
@@ -30,18 +42,22 @@ const Movies = (props) => {
 			{/* Основной бллок */}
 			<main>
 				<SearchForm
-					isSearch={isSearch}
-					isClick={isClick}
+					onSearch={onSearch}
+					valueCheckbox={valueCheckbox}
+					setData={setData}
+					isData={data}
+					onCheckboxChange={onCheckboxChange}
 				/>
 				{preloader ? (
 					<Preloader />
 				) : (
+					//  "" 
 					<MoviesCardList
-						isFound={isFound}
-						isSave={isSave}
-						isAddMovies={isAddMovies}
-						isDeleteMovies={isDeleteMovies}
-						message={message}
+						isData={data}
+						setData={setData}
+						onAddMovies={onAddMovies}
+						onDeleteMovies={onDeleteMovies}
+						list={list}
 					/>
 				)
 				}

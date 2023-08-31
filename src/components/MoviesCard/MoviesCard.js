@@ -10,46 +10,22 @@ import { getLenghtMovie, serverUrl } from "../../utils/constant";
 const MoviesCard = (props) => {
 	const {
 		movie,
-		// id,
+		// key,
 		onSave,
 		onDelete,
-		isSave,
+		save,
 	} = props;
 	const location = useLocation();
 	// сохраненные фильмы
-	const isValue = isSave.find((element) => element.moveId === movie.id);
-	const [saveValue, setSaveValue] = React.useState(false);
-	console.log(isValue);
 	function handleSave() {
-		// setSaveValue(!saveValue);
-		if (isValue) {
-			onSave(isValue);
+		console.log(save);
+		if ((location.pathname === "/movies" && save)
+		|| (location.pathname === "/saved-movies")) {
+			onDelete(movie);
 		} else {
 			onSave(movie);
 		}
-		// console.log(saveValue);
 	};
-	// удвление фильмов
-	function handleDelete() {
-		if (location.pathname !== "/movies") {
-			onDelete(isValue);
-		} else {
-			onDelete(movie);
-		}
-	};
-	function handleChange() {
-		if (location.pathname === "/saved-movies") {
-			onDelete(movie);
-		} else {
-			console.log(isValue);
-			if(saveValue){
-				handleDelete();
-			} else {
-				handleSave();
-			}
-			setSaveValue(!saveValue);
-		}
-	}
 	let imageUrl;
 	movie.image.url
 		? (imageUrl = serverUrl + movie.image.url)
@@ -74,7 +50,7 @@ const MoviesCard = (props) => {
 					</p>
 				</div>
 				<button className={`movie-card__save 
-				${saveValue ? "movie-card__save-active"
+				${save ? "movie-card__save-active"
 						: ""
 					}
 				${location.pathname === "/saved-movies"
@@ -82,7 +58,7 @@ const MoviesCard = (props) => {
 						: ""
 					} 
 			`}
-					onClick={handleChange}
+					onClick={handleSave}
 				/>
 			</div>
 		</div>

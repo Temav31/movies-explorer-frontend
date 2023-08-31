@@ -4,13 +4,14 @@ import "./MoviesButton.css";
 // импорт блоков
 const MoviesButton = (props) => {
 	const { onClick,
-		isFound,
+		list,
 		cardList
 	} = props;
 	return (
+		// "" 
 		<div
 			className={`movies-button 
-				${isFound.length !== cardList.length ? "" : "movies-button__save-movies"}
+				${list.length !== cardList.length ? "" : "movies-button__save-movies"}
 		`}>
 			<button
 				className="movies-button__button"
