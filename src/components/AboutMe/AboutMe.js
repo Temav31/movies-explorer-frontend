@@ -6,8 +6,8 @@ import Portfolio from "../Portfolio/Portfolio"
 import React from "react";
 const AboutMe = () => {
 	return (
-		<section className="about-me">
-				<h2 id="about-me" className="about-me__head">
+		<section className="about-me"  id="about-me">
+				<h2 className="about-me__head">
 					Студент
 				</h2>
 			<div className="about-me__container">
