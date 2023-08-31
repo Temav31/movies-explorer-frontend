@@ -36,7 +36,7 @@ const App = () => {
 	// авторизация 
 	const [authoriz, setАuthoriz] = React.useState(false);
 	// фильмы 
-	const [moviesList, setMoviesList] = React.useState([]);
+	const [movies, setMovies] = React.useState([]);
 	const [searchMoviesList, setSearchMoviesList] = React.useState([]);
 	// 
 	const [saveMovies, setSaveMovies] = React.useState([]);
@@ -185,13 +185,13 @@ const App = () => {
 		let data = localStorage.getItem("loadMovies");
 		if (JSON.parse(data)) {
 			if (data) {
-				setMoviesList(JSON.parse(data));
+				setMovies(JSON.parse(data));
 			}
 		}
 	}, []);
 	// функция поиска фильмов
 	function handleSearchFilm(film, value) {
-		const short = moviesList.length;
+		const short = movies.length;
 		setErrorMovies("");
 		if (short === 0) {
 			console.log("получение фильмоф");
@@ -218,7 +218,7 @@ const App = () => {
 				})
 		} else {
 			console.log('поиск фильмов');
-			const foundMovies = moviesList.filter((item) => item.nameRU.toLowerCase().includes(film.toLowerCase()));
+			const foundMovies = movies.filter((item) => item.nameRU.toLowerCase().includes(film.toLowerCase()));
 			const number = foundMovies.length;
 			if (number === 0) {
 				setErrorMovies("Ничего не найдено");
