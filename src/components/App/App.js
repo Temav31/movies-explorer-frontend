@@ -104,7 +104,8 @@ const App = () => {
 			})
 			.catch((err) => {
 				console.log("Ошибка регистрации");
-				setErrorMessage(err.message);
+				// console.log(err);
+				setErrorMessage("Пользователь с такой почтой уже есть");
 				setIsInfoTooltipPopupOpen(true);
 			})
 			.finally(() => {
@@ -232,7 +233,7 @@ const App = () => {
 			localStorage.setItem("status", value);
 		} else {
 			localStorage.setItem("foundSaveMovies", JSON.stringify(film));
-			localStorage.setItem("status", value);
+			// localStorage.setItem("status", value);
 		}
 	};
 	// функция добавления фильма
@@ -332,6 +333,7 @@ const App = () => {
 			localStorage.setItem("foundSaveMovies", JSON.stringify(data));
 		} else {
 			localStorage.setItem("foundMovies", JSON.stringify(data));
+
 		}
 	};
 	// функция поиска в сохрангённых фильмах
