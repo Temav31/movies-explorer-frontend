@@ -243,6 +243,7 @@ const App = () => {
 	};
 	// функция добавления фильма
 	function handleAddMovie(data) {
+		setErrorMessage("");
 		console.log("сохранение");
 		console.log(data);
 		MainApi.addMovie(data)
@@ -264,10 +265,13 @@ const App = () => {
 			})
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
+				setErrorMessage(`Карточку не удалось сохранить, ошибка ${err}`);
+
 			});
 	};
 	// функция удаления фильмов
 	function handleDeleteMovies(movie) {
+		setErrorMessage("");
 		console.log("удаление");
 		let id;
 		movie.id
@@ -295,6 +299,7 @@ const App = () => {
 			})
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
+				setErrorMessage(`Карточку не удалось удалить, ошибка ${err}`);
 			});
 	};
 	// функция получения сохранёных фильмов
