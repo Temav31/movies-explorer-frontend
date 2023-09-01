@@ -84,7 +84,7 @@ const App = () => {
 				}
 			})
 			.catch((err) => {
-				console.log(err);
+				// console.log(err);
 				setErrorMessage(err.message);
 				setIsInfoTooltipPopupOpen(true);
 			})
@@ -103,8 +103,6 @@ const App = () => {
 				});
 			})
 			.catch((err) => {
-				console.log("Ошибка регистрации");
-				// console.log(err);
 				setErrorMessage("Пользователь с такой почтой уже есть");
 				setIsInfoTooltipPopupOpen(true);
 			})
@@ -123,7 +121,6 @@ const App = () => {
 			MainApi.getProfile()
 				.then((data) => {
 					setCurrentUser(data);
-					// console.log(currentUser);
 					setАuthoriz(true);
 					["/signin", "/signup"].includes(place)
 						? navigate("/movies")
@@ -215,16 +212,13 @@ const App = () => {
 	function handleSearchFilm(film) {
 		setLoading(true);
 		console.log("поиск");
-		// console.log(movies);
 		const list = movies.filter((item) => item.nameRU.toLowerCase().includes(film.toLowerCase()));
 		const shortList = list.filter(((movie) => movie.duration < LENGHT_MOVIE));
 		setData(true);
 
-		// console.log(shortList);
 		localStorage.setItem('name', film);
 		localStorage.setItem('movies', JSON.stringify(list));
 		localStorage.setItem('foundMovies', JSON.stringify(shortList));
-		// setLoading(false);
 		setTimeout(setLoading(false), 100);
 	};
 	// функция проверка короткометраждек в сохр фильмах
@@ -245,10 +239,8 @@ const App = () => {
 	function handleAddMovie(data) {
 		setErrorMessage("");
 		console.log("сохранение");
-		console.log(data);
 		MainApi.addMovie(data)
 			.then((newMovie) => {
-				console.log(newMovie);
 				setNewList(JSON.parse(localStorage.getItem("saveMovies")));
 				const value = JSON.parse(localStorage.getItem("status"));
 				
@@ -340,7 +332,7 @@ const App = () => {
 	};
 	// функция получения сохранёных фильмов
 	function handleCheckSave(user, save) {
-		console.log("hsferfgeg");
+		// console.log("hsferfgeg");
 
 		const page = local.pathname === "/saved-movies";
 		let foundMovies = [];
