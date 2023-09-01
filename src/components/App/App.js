@@ -266,7 +266,7 @@ const App = () => {
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
 				setErrorMessage(`Карточку не удалось сохранить, ошибка ${err}`);
-
+				setIsInfoTooltipPopupOpen(true);
 			});
 	};
 	// функция удаления фильмов
@@ -300,6 +300,7 @@ const App = () => {
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
 				setErrorMessage(`Карточку не удалось удалить, ошибка ${err}`);
+				setIsInfoTooltipPopupOpen(true);
 			});
 	};
 	// функция получения сохранёных фильмов
