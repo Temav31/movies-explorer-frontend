@@ -120,17 +120,17 @@ const MoviesCardList = (props) => {
 						key={movie.id || movie._id}
 						onSave={onAddMovies}
 						onDelete={onDeleteMovies}
-						save={movie.isSave}
+						// save={movie.isSave}
 					/>
 				))}
 			</div>
-			{location.pathname === "/movies" ? (
+			{/* {location.pathname === "/movies" ? (
 				<MoviesButton
 					onClick={handleAddMovie}
 					cardList={cardList}
 					list={list}
 				/>
-			) : ("")}
+			) : ("")} */}
 		</section>
 	);
 };

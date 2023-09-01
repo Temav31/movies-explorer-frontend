@@ -13,16 +13,17 @@ const MoviesCard = (props) => {
 		// key,
 		onSave,
 		onDelete,
-		save,
+		// save,
 	} = props;
 	const location = useLocation();
+	const save = movie.isSave;
 	// сохраненные фильмы
 	function handleSave() {
-		console.log(save);
+		// console.log(save);
 		if ((location.pathname === "/movies" && save)
 		|| (location.pathname === "/saved-movies")) {
 			onDelete(movie);
-		} else {
+		} else {   
 			onSave(movie);
 		}
 	};
