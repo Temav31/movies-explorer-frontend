@@ -40,6 +40,7 @@ const Movies = (props) => {
 	function onCheckboxChange() {
 		setValueCheckbox(!valueCheckbox);
 		onClick(list, "movies", !valueCheckbox);
+		localStorage.setItem("status", JSON.parse(!valueCheckbox));
 	};
 	React.useEffect(() => {
 		setData(false);
