@@ -22,6 +22,9 @@ const Profile = ({ isExite, isLogin, onUpdateUser, block }) => {
 	// данные
 	const [name, setName] = useState(currentUser.name);
 	const [email, setEmail] = useState(currentUser.email);
+	// данные
+	const [nameUser, setNameUser] = useState(currentUser.name);
+	const [emailUser, setEmailUser] = useState(currentUser.email);
 	// ошибки
 	const [errName, setErrName] = useState("");
 	const [errEmail, setErrEmail] = useState("");
@@ -46,7 +49,7 @@ const Profile = ({ isExite, isLogin, onUpdateUser, block }) => {
 			setErrName(target.validationMessage);
 			setNameValidation(false);
 		}
-		// console.log(nameValidation);
+		console.log(nameValidation);
 	};
 	// изменения почты
 	function handleChangeEmail(event) {
@@ -64,7 +67,7 @@ const Profile = ({ isExite, isLogin, onUpdateUser, block }) => {
 			setErrEmail(target.validationMessage);
 			setEmailValidation(false);
 		}
-		// console.log(emailValidation);
+		console.log(emailValidation);
 	};
 	// отправка формы 
 	function handleSubmit(event) {
@@ -73,14 +76,20 @@ const Profile = ({ isExite, isLogin, onUpdateUser, block }) => {
 			name: name,
 			email: email,
 		});
+		setEmailUser(email);
+		setNameUser(name);
+		setFormValue(false);
 	}
 	useEffect(() => {
-		const validName = currentUser.name === name;
-		const validEmail = currentUser.email === email;
+		const validName = nameUser === name;
+		const validEmail = emailUser === email;		
+		// const validName = currentUser.name === name;
+		// const validEmail = currentUser.email === email;
 		const valid = validEmail && validName;
 		const validInput = nameValidation && emailValidation;
-		// console.log(emailValidation);
-		if (!valid && validInput) {
+		// console.log(valid);
+		// console.log(validInput);
+		if (!valid || validInput) {
 			setFormValue(true);
 		} else {
 			setFormValue(false);
@@ -143,11 +152,10 @@ const Profile = ({ isExite, isLogin, onUpdateUser, block }) => {
 						<span className="profile__success">
 							{errEmail}
 						</span>
-						<button className={`profile__link  ${
-							!formValue ? "profile__link_disabled" : ""
-						}`} 
-						type="submit"
-						disabled={!formValue}
+						<button className={`profile__link  ${!formValue ? "profile__link_disabled" : ""
+							}`}
+							type="submit"
+							disabled={!formValue}
 						>
 							Редактировать
 						</button>
