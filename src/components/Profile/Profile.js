@@ -78,7 +78,7 @@ const Profile = ({ isExite, isLogin, onUpdateUser, block }) => {
 		const validName = currentUser.name === name;
 		const validEmail = currentUser.email === email;
 		const valid = validEmail && validName;
-		const validInput = nameValidation || emailValidation;
+		const validInput = nameValidation && emailValidation;
 		// console.log(emailValidation);
 		if (!valid && validInput) {
 			setFormValue(true);

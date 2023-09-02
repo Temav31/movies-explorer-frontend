@@ -21,19 +21,21 @@ const SavedMovies = (props) => {
 		onSearch,
 	} = props;
 	const [valueCheckbox, setValueCheckbox] = React.useState(false);
-	const list = (valueCheckbox
-		? JSON.parse(localStorage.getItem("foundSaveMovies"))
-		: JSON.parse(localStorage.getItem("saveMovies"))) || [];
+	const [list, setList] = React.useState([]);
 
-		console.log(list);
 	function onCheckboxChange() {
-		// console.log(JSON.parse(localStorage.getItem("savedList")));
 		setValueCheckbox(!valueCheckbox);
-		onClick(list, "save-movies", !valueCheckbox);
-	}
+		onClick(list, "movies", !valueCheckbox);
+	};
 	React.useEffect(() => {
 		setData(false);
+		setList((valueCheckbox
+			? JSON.parse(localStorage.getItem("foundSaveMovies"))
+			: JSON.parse(localStorage.getItem("saveMovies"))) || []);
 	}, [data]);
+	// React.useEffect(() => {
+	// 	setValueCheckbox(false);
+	// }, []);
 	return (
 		<>
 			<Header

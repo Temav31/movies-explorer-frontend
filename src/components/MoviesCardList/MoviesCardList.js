@@ -103,19 +103,19 @@ const MoviesCardList = (props) => {
 		handleAddWidth();
 		return () => handleRemoveWidth();
 	}, [movieLimit]);
-	const short = list.length;
+
 	return (
 		<section>
 			<p className="movies-cardlist__text">
-				{short === 0  ? "Ничего не найдено" : ""}
+				{list.length === 0  ? "Ничего не найдено" : ""}
 				</p>
 			<div className={`movies-cardlist
 		${location.pathname === "/saved-movies"
 					? "movies-cardlist__empty"
 					: ""
 				} `}>
-				{list.map((movie) => (
-					<MoviesCard
+				{cardList.map((movie) => (
+					<MoviesCard 
 						movie={movie}
 						key={movie.id || movie._id}
 						onSave={onAddMovies}
@@ -124,13 +124,13 @@ const MoviesCardList = (props) => {
 					/>
 				))}
 			</div>
-			{/* {location.pathname === "/movies" ? (
+			{location.pathname === "/movies" ? (
 				<MoviesButton
 					onClick={handleAddMovie}
 					cardList={cardList}
 					list={list}
 				/>
-			) : ("")} */}
+			) : ("")}
 		</section>
 	);
 };

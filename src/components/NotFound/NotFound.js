@@ -7,7 +7,7 @@ import React from "react";
 import {useNavigate} from 'react-router-dom';
 
 const NotFound = () => {
-	let history = useNavigate();
+	const history = useNavigate();
 	return (
 		<section className="not-found">
 			<h1 className="not-found__head">
@@ -16,7 +16,7 @@ const NotFound = () => {
 			<p className="not-found__text">
 				Страница не найдена
 			</p>
-			<button className="not-found__link" type='button' onClick={() => history(-1)}>
+			<button className="not-found__link" type='button' onClick={() => history(-2)}>
 				Назад
 			</button>
 		</section>

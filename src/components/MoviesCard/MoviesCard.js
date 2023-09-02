@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 // импорт стилей
 import "./MoviesCard.css";
 // импорт блоков
 import { getLenghtMovie, serverUrl } from "../../utils/constant";
-// import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+
+
 
 // импорт базовых
 const MoviesCard = (props) => {
@@ -16,15 +18,23 @@ const MoviesCard = (props) => {
 		// save,
 	} = props;
 	const location = useLocation();
-	const save = movie.isSave;
+	const [isLike, setIsLike] = useState(false)
+	const userContext = useContext(CurrentUserContext)
+
+	useEffect(() => {
+		const isLiked = JSON.parse(localStorage.getItem('saveMovies')).find((value) => movie.id === value.movieId)
+		setIsLike(Boolean(isLiked))
+	}, [])
 	// сохраненные фильмы
 	function handleSave() {
+
+		const setValue = (value) => setIsLike(value)
 		// console.log(save);
-		if ((location.pathname === "/movies" && save)
+		if ((location.pathname === "/movies" && isLike)
 		|| (location.pathname === "/saved-movies")) {
-			onDelete(movie);
+			onDelete(movie).then(setValue).catch(setValue)
 		} else {   
-			onSave(movie);
+			onSave(movie).then(setValue).catch(setValue)
 		}
 	};
 	let imageUrl;
@@ -51,7 +61,7 @@ const MoviesCard = (props) => {
 					</p>
 				</div>
 				<button className={`movie-card__save 
-				${save ? "movie-card__save-active"
+				${isLike ? "movie-card__save-active"
 						: ""
 					}
 				${location.pathname === "/saved-movies"

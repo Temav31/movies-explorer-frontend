@@ -9,6 +9,18 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 // загрузка
 import Preloader from "../Preloader/Preloader";
+import {
+	MOVIES_LIMIT,
+	SMALL_WIDTH,
+	MEDIUM_WIDTH,
+	BIG_WIDTH,
+	SMALL_SEARCH,
+	MEDIUM_SEARCH,
+	BIG_SEARCH,
+	SMALL_ADD_MOVIES,
+	ADD_MOVIES,
+} from "../../utils/constant";
+
 
 const Movies = (props) => {
 	const {
@@ -21,18 +33,19 @@ const Movies = (props) => {
 		data,
 		setData,
 	} = props;
+
 	const [valueCheckbox, setValueCheckbox] = React.useState(JSON.parse(localStorage.getItem("status")));
-	// console.log(valueCheckbox);
-	const list = (valueCheckbox
-		? JSON.parse(localStorage.getItem("foundMovies"))
-		: JSON.parse(localStorage.getItem("movies"))) || [];
-		// console.log(list);
+	const [list, setList] = React.useState([]);
+
 	function onCheckboxChange() {
 		setValueCheckbox(!valueCheckbox);
 		onClick(list, "movies", !valueCheckbox);
 	};
 	React.useEffect(() => {
 		setData(false);
+		setList((valueCheckbox
+			? JSON.parse(localStorage.getItem("foundMovies"))
+			: JSON.parse(localStorage.getItem("movies"))) || []);
 	}, [data]);
 	return (
 		<>
