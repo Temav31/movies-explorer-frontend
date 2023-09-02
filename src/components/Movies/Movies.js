@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 // импорт стилей
 // import "./Movies.css";
 // импорт блоков
@@ -7,8 +7,13 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 // import MoviesButton from "../MoviesButton/MoviesButton";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
+// компонент
+import useChangePage from '../../hooks/useChangePage';
+
 // загрузка
 import Preloader from "../Preloader/Preloader";
+// импорт кнопки
+import MoviesButton from "../MoviesButton/MoviesButton";
 import {
 	MOVIES_LIMIT,
 	SMALL_WIDTH,
@@ -20,6 +25,7 @@ import {
 	SMALL_ADD_MOVIES,
 	ADD_MOVIES,
 } from "../../utils/constant";
+
 
 
 const Movies = (props) => {
@@ -35,19 +41,72 @@ const Movies = (props) => {
 	} = props;
 
 	const [valueCheckbox, setValueCheckbox] = React.useState(JSON.parse(localStorage.getItem("status")));
-	const [list, setList] = React.useState([]);
+	// const [listMovie, setlistMovie] = React.useState([]);
+	// React.useEffect(() => {
+	// 	setData(false);
+	// 	setlistMovie((valueCheckbox
+	// 		? JSON.parse(localStorage.getItem("foundMovies"))
+	// 		: JSON.parse(localStorage.getItem("movies"))) || []);
+	// }, [data]);
+		const listMovie = valueCheckbox
+			? JSON.parse(localStorage.getItem("foundMovies")) || []
+			: JSON.parse(localStorage.getItem("movies")) || [];
+
+
+	const pageWidth = useChangePage().width;
+	const [loadMoreNumber, setLoadMoreNumber] = React.useState(limitStart(pageWidth));
+	const initialLimit = limitMovie(pageWidth);
+	const [index, setIndex] = React.useState(initialLimit);
+
+	React.useEffect(() => {
+		setLoadMoreNumber(limitStart(pageWidth))
+	}, [pageWidth]);
+
+	// функции
+	function limitMovie(data) {
+		if (data < MEDIUM_WIDTH) {
+			return SMALL_SEARCH;
+		} else {
+			return MEDIUM_SEARCH;
+		}
+	}
+	function limitStart(data) {
+		if (data < MEDIUM_WIDTH) {
+			return SMALL_ADD_MOVIES;
+		} else {
+			return ADD_MOVIES;
+		}
+	}
+
+	const [list, setList] = React.useState(listMovie.slice(0, index));
+	const [showMore, setShowMore] = React.useState(listMovie.length > index);
+	React.useEffect(() => {
+		setData(false);
+		if (listMovie.length === list.length) {
+			setList(list => list.map(item => listMovie.find(i => i.id === item.id)));
+		} else {
+			(listMovie.slice(0, index));
+			setShowMore(listMovie.length > index)
+			setIndex(initialLimit);
+		}
+	}, [data]);
 
 	function onCheckboxChange() {
 		setValueCheckbox(!valueCheckbox);
-		onClick(list, "movies", !valueCheckbox);
+		onClick(listMovie, "movies", !valueCheckbox);
 		localStorage.setItem("status", JSON.parse(!valueCheckbox));
 	};
-	React.useEffect(() => {
-		setData(false);
-		setList((valueCheckbox
-			? JSON.parse(localStorage.getItem("foundMovies"))
-			: JSON.parse(localStorage.getItem("movies"))) || []);
-	}, [data]);
+
+	const handleAddMovie = () => {
+		const newIndex = index + loadMoreNumber;
+		const newShowMore = newIndex < listMovie.length - 1;
+		const newList = list.concat(listMovie.slice(index, newIndex));
+		console.log(newList);
+		setIndex(newIndex);
+		setList(newList);
+		setShowMore(newShowMore);
+	};
+
 	return (
 		<>
 			<Header
@@ -75,6 +134,7 @@ const Movies = (props) => {
 					/>
 				)
 				}
+				{showMore && <MoviesButton onClick={handleAddMovie} />}
 			</main>
 			{/* Конец основного блока */}
 			<Footer />

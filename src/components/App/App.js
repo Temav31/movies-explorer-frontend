@@ -173,13 +173,6 @@ const App = () => {
 		console.log("фильмы");
 		Promise.all([MoviesApi.getMovies(), MainApi.getMoviesList()])
 			.then(([films, savedMovies]) => {
-				// const list = savedMovies.filter((film) => {
-				// 	if (film === currentUser._id) {
-				// 		return true;
-				// 	} else {
-				// 		return false;
-				// 	}
-				// });
 				const list = savedMovies.filter((item) => {
 					return item.owner === currentUser._id;
 				});
@@ -188,9 +181,6 @@ const App = () => {
 				localStorage.setItem("saveMovies", JSON.stringify(list));
 
 				setMovies(films.map((movie) => {
-					// const like = Boolean(list.find((item) =>
-					// 	item.nameRU === movie.nameRU
-					// ));
 					return {
 						...movie,
 						isSave: Boolean(list.find((item) =>
@@ -199,6 +189,7 @@ const App = () => {
 					}
 				}));
 				setData(true);
+				console.log(list);
 			})
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
@@ -311,8 +302,6 @@ const App = () => {
 	};
 	// функция получения сохранёных фильмов
 	function handleCheckSave(user, save) {
-		// console.log("hsferfgeg");
-
 		const page = local.pathname === "/saved-movies";
 		let foundMovies = [];
 		if (page) {

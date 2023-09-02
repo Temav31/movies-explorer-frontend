@@ -3,16 +3,10 @@ import React from "react";
 import "./MoviesButton.css";
 // импорт блоков
 const MoviesButton = (props) => {
-	const { onClick,
-		list,
-		cardList
-	} = props;
+	const { onClick	} = props;
 	return (
 		// "" 
-		<div
-			className={`movies-button 
-				${list.length !== cardList.length ? "" : "movies-button__save-movies"}
-		`}>
+		<div className='movies-button'>
 			<button
 				className="movies-button__button"
 				onClick={onClick}
