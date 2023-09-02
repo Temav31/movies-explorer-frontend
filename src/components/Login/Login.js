@@ -79,6 +79,7 @@ const Login = ({ isLogin, block }) => {
 			link="/signup"
 			isValid={formValue}
 			onSubmit={handleSubmit}
+			block={block}
 		>
 			<label className="author-form__label">
 				<span className="author-form__span">

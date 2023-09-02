@@ -82,7 +82,7 @@ const Profile = ({ isExite, isLogin, onUpdateUser, block }) => {
 	}
 	useEffect(() => {
 		const validName = nameUser === name;
-		const validEmail = emailUser === email;		
+		const validEmail = emailUser === email;
 		// const validName = currentUser.name === name;
 		// const validEmail = currentUser.email === email;
 		const valid = validEmail && validName;
@@ -152,8 +152,10 @@ const Profile = ({ isExite, isLogin, onUpdateUser, block }) => {
 						<span className="profile__success">
 							{errEmail}
 						</span>
-						<button className={`profile__link  ${!formValue ? "profile__link_disabled" : ""
-							}`}
+						<button className={`profile__link  
+						${!formValue ? "profile__link_disabled" : ""}
+						${block ? "profile__link_disabled" : ""}
+						`}
 							type="submit"
 							disabled={!formValue}
 						>
