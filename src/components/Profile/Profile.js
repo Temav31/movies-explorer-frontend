@@ -23,8 +23,8 @@ const Profile = ({ isExite, isLogin, onUpdateUser, block }) => {
 	const [name, setName] = useState(currentUser.name);
 	const [email, setEmail] = useState(currentUser.email);
 	// данные
-	const [nameUser, setNameUser] = useState(currentUser.name);
-	const [emailUser, setEmailUser] = useState(currentUser.email);
+	// const [nameUser, setNameUser] = useState(currentUser.name);
+	// const [emailUser, setEmailUser] = useState(currentUser.email);
 	// ошибки
 	const [errName, setErrName] = useState("");
 	const [errEmail, setErrEmail] = useState("");
@@ -76,15 +76,15 @@ const Profile = ({ isExite, isLogin, onUpdateUser, block }) => {
 			name: name,
 			email: email,
 		});
-		setEmailUser(email);
-		setNameUser(name);
+		// setEmailUser(email);
+		// setNameUser(name);
 		setFormValue(false);
 	}
 	useEffect(() => {
-		const validName = nameUser === name;
-		const validEmail = emailUser === email;
-		// const validName = currentUser.name === name;
-		// const validEmail = currentUser.email === email;
+		// const validName = nameUser === name;
+		// const validEmail = emailUser === email;
+		const validName = currentUser.name === name;
+		const validEmail = currentUser.email === email;
 		const valid = validEmail && validName;
 		const validInput = nameValidation && emailValidation;
 		// console.log(valid);
