@@ -37,18 +37,19 @@ const Movies = (props) => {
 		onSearch,
 		data,
 		setData,
-		movies
+		movies,
+		value,
+		list,
 	} = props;
 
 	const [valueCheckbox, setValueCheckbox] = React.useState(JSON.parse(localStorage.getItem("status")));
-	
+
 	const [listMovie, setlistMovie] = React.useState([]);
 	React.useEffect(() => {
 		setData(false);
 		setlistMovie((valueCheckbox
 			? JSON.parse(localStorage.getItem("foundMovies"))
 			: JSON.parse(localStorage.getItem("movies"))) || []);
-			console.log("dfvjkosndo")
 
 	}, [data]);
 
@@ -82,7 +83,7 @@ const Movies = (props) => {
 						setData={setData}
 						onAddMovies={onAddMovies}
 						onDeleteMovies={onDeleteMovies}
-						list={listMovie}
+						list={value ? list : movies}
 					/>
 				)
 				}

@@ -26,15 +26,15 @@ const SavedMovies = (props) => {
 
 	function onCheckboxChange() {
 		setValueCheckbox(!valueCheckbox);
-		onClick(list, "movies", !valueCheckbox);
+		onClick(saveMovies, "saved-movies", !valueCheckbox);
 	};
-	React.useEffect(() => {
-		// console.log("dfjibghvfdrio");
-		setData(false);
-		setList((valueCheckbox
-			? JSON.parse(localStorage.getItem("foundSaveMovies"))
-			: JSON.parse(localStorage.getItem("saveMovies"))) || []);
-	}, [data]);
+	// React.useEffect(() => {
+	// 	// console.log("dfjibghvfdrio");
+	// 	setData(false);
+	// 	setList((valueCheckbox
+	// 		? JSON.parse(localStorage.getItem("foundSaveMovies"))
+	// 		: JSON.parse(localStorage.getItem("saveMovies"))) || []);
+	// }, [data]);
 	return (
 		<>
 			<Header
@@ -56,7 +56,7 @@ const SavedMovies = (props) => {
 					isData={data}
 					setData={setData}
 					onDeleteMovies={onDeleteMovies}
-					list={list}
+					list={saveMovies}
 					/>
 				)
 				}   

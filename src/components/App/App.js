@@ -59,6 +59,8 @@ const App = () => {
 	// блокировка формы
 	const [formBlock, setFormBlock] = useState(false);
 	const [data, setData] = useState(false);
+
+	const [start, setStart] = useState(true);
 	// пользователь 
 	const [currentUser, setCurrentUser] = useState({
 		name: '',
@@ -151,7 +153,7 @@ const App = () => {
 			})
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
-				setErrorMessage(err.message);
+				setErrorMessage(`Не удалось обновить профиль. ${err}`);
 				setIsInfoTooltipPopupOpen(true);
 			})
 			.finally(() => {
@@ -185,7 +187,7 @@ const App = () => {
 				});
 
 				setSaveMovies(list);
-				setFoundSave(saveMovies);
+				setFoundSave(list);
 				setSave(list);
 				localStorage.setItem("saveMovies", JSON.stringify(list));
 
@@ -197,15 +199,8 @@ const App = () => {
 						),
 					}
 				}));
+				setFilm(movies);
 				localStorage.setItem('movies', JSON.stringify(movies));
-				setFilm(film.map((movie) => {
-					return {
-						...movie,
-						isSave: Boolean(
-							list.find((item) => item.movieId === movie.id)
-						),
-					}
-				}));
 				setFoundMoveis(movies);
 				setData(true);
 			})
@@ -228,39 +223,41 @@ const App = () => {
 		setName(film);
 		localStorage.setItem('movies', JSON.stringify(list));
 		localStorage.setItem('foundMovies', JSON.stringify(shortList));
-		console.log(list);
-		console.log(shortList);
 		setFoundMoveis(list);
 		setFoundMoveisShort(list);
 		setFilm(list);
 		setLoading(false);
+		setStart(false);
 		setData(true);
 	};
 	// функция проверка короткометраждек в сохр фильмах
 	function handleCheckbox(movies, namePage, value) {
-		const film = foundMoveis.filter((film) => film.duration < LENGHT_MOVIE);
 		const saveFilm = foundSave.filter((film) => film.duration < LENGHT_MOVIE);
-		console.log(saveFilm)
-		if (namePage === "save-movies") {
-			if(value === true){
+		console.log(film)
+			if (value === true) {
+				// console.log("hi");
 				setSave(saveFilm);
 			}
-			else{
+			else {
 				setSave(foundSave);
 			}
-			localStorage.setItem("foundMovies", JSON.stringify(film));
-			localStorage.setItem("status", value);
-		} else {
-			if(value === true){
-				setFilm(film);
-			}
-			else{
-				setFilm(foundMoveis);
-			}
-			setFoundMoveisShort(saveFilm)
 			localStorage.setItem("foundSaveMovies", JSON.stringify(saveFilm));
-			// localStorage.setItem("status", value);
+			localStorage.setItem("status", value);
+		setData(true);
+	};
+	// функция проверка короткометраждек в сохр фильмах
+	function handleCheckboxMovies(movies, namePage, value) {
+		const film = foundMoveis.filter((film) => film.duration < LENGHT_MOVIE);
+		console.log(film)
+		if (value === true) {
+			setFilm(film);
 		}
+		else {
+			setFilm(foundMoveis);
+		}
+		localStorage.setItem("foundMovies", JSON.stringify(film));
+		localStorage.setItem("status", value);
+		setStart(false);
 		setData(true);
 	};
 	// функция добавления фильма
@@ -423,6 +420,8 @@ const App = () => {
 		setSave(list);
 		console.log(list);
 		localStorage.setItem('saveMovies', JSON.stringify(list));
+		localStorage.setItem("status", JSON.stringify(false));
+
 		setData(true);
 	};
 	return (
@@ -459,11 +458,13 @@ const App = () => {
 								element={Movies}
 								onAddMovies={handleAddMovie}
 								onDeleteMovies={handleDeleteMovies}
-								onClick={handleCheckbox}
+								onClick={handleCheckboxMovies}
 								onSearch={handleSearchFilm}
 								data={data}
 								setData={setData}
 								movies={film}
+								value={start}
+								list={movies}
 							// message={errorMovies}
 							/>
 						}

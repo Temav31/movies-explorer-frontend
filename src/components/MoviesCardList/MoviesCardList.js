@@ -50,9 +50,7 @@ const MoviesCardList = (props) => {
 	};
 	// функция обновления ширины
 	function handleUpdateWidth() {
-		// isSave.map((item) => {
-		// 	console.log("hi");
-		// })
+
 		setPageWidth(window.innerWidth);
 	}
 	// функция увеличения ширины
