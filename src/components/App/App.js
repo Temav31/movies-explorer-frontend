@@ -49,7 +49,9 @@ const App = () => {
 	const [foundMoveisShort, setFoundMoveisShort] = useState([]);
 	const [foundSaveShort, setFoundSaveShort] = useState([]);
 	const [film, setFilm] = useState([]);
-	const [save, setSave] = useState([]);
+	const [save, setSave] = useState("");
+	const [name, setName] = useState("");
+	const [nameSave, setNameSave] = useState([]);
 	// const [saveFoundMovies, setSaveFoundMovies] = React.useState([]);
 	// ошибки регистрации и авторизации
 	const [errorMessage, setErrorMessage] = React.useState("");
@@ -222,6 +224,7 @@ const App = () => {
 		const shortList = list.filter(((movie) => movie.duration < LENGHT_MOVIE));
 
 		localStorage.setItem('name', film);
+		setName(film);
 		localStorage.setItem('movies', JSON.stringify(list));
 		localStorage.setItem('foundMovies', JSON.stringify(shortList));
 		console.log(list);
@@ -320,7 +323,7 @@ const App = () => {
 						});
 						setSaveMovies(list);
 						setFoundSave(saveMovies);
-						// setSave(list);
+						setSave(list);
 						localStorage.setItem("saveMovies", JSON.stringify(list));
 						local.pathname === "saved-movie"
 							? setMovies(movies.map((_movie) => {
@@ -362,7 +365,8 @@ const App = () => {
 			})
 			.catch((err) => {
 				console.log(err)
-			})
+			});
+
 	};
 	// функция получения сохранёных фильмов
 	function handleChangeSave(id, isLike) {
@@ -410,7 +414,7 @@ const App = () => {
 	function handleSaveSearchFilm(film) {
 		const list = saveMovies.filter((item) => item.nameRU.toLowerCase().includes(film.toLowerCase()));
 		// const list = foundSave.filter((item) => item.nameRU.toLowerCase().includes(film.toLowerCase()));
-
+		setNameSave(film);
 		localStorage.setItem('saveName', film);
 		setFoundSave(list);
 		setFoundSaveShort(foundSave);
