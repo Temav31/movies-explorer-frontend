@@ -22,9 +22,8 @@ const MoviesCard = (props) => {
 	const userContext = useContext(CurrentUserContext)
 
 	useEffect(() => {
-		const isLiked = JSON.parse(localStorage.getItem('saveMovies')).find((value) => movie.id === value.movieId)
-		setIsLike(Boolean(isLiked))
-	}, [])
+		setIsLike(Boolean(movie.isSave))
+	}, [movie])
 	// сохраненные фильмы
 	function handleSave() {
 
@@ -32,9 +31,11 @@ const MoviesCard = (props) => {
 		// console.log(save);
 		if ((location.pathname === "/movies" && isLike)
 		|| (location.pathname === "/saved-movies")) {
-			onDelete(movie).then(setValue).catch(setValue)
-		} else {   
-			onSave(movie).then(setValue).catch(setValue)
+			onDelete(movie)
+		} else {
+		console.log("save");
+
+			onSave(movie)
 		}
 	};
 	let imageUrl;
