@@ -25,7 +25,7 @@ const MoviesCardList = (props) => {
 		onDeleteMovies,
 		list,
 	} = props;
-	// console.log(list);
+	console.log(list);
 	const location = useLocation();
 	const [pageWidth, setPageWidth] = React.useState(BIG_WIDTH);
 	// лимит карточек
@@ -110,15 +110,28 @@ const MoviesCardList = (props) => {
 					? "movies-cardlist__empty"
 					: ""
 				} `}>
-				{cardList.map((movie) => (
-					<MoviesCard
-						movie={movie}
-						// key={movie.id || movie._id}
-						key={movie.id}
-						onSave={onAddMovies}
-						onDelete={onDeleteMovies}
-					/>
-				))}
+				{location.pathname === "/saved-movies" ? (
+						list.map((movie) => (
+							<MoviesCard
+								movie={movie}
+								// key={movie.id || movie._id}
+								key={movie.id}
+								onSave={onAddMovies}
+								onDelete={onDeleteMovies}
+							/>
+						))
+				) : (
+					cardList.map((movie) => (
+						<MoviesCard
+							movie={movie}
+							// key={movie.id || movie._id}
+							key={movie.id}
+							onSave={onAddMovies}
+							onDelete={onDeleteMovies}
+						/>
+					))
+				)}
+
 			</div>
 			{location.pathname === "/movies" ? (
 				<MoviesButton

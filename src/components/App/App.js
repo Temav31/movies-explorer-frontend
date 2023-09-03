@@ -184,6 +184,7 @@ const App = () => {
 
 				setSaveMovies(list);
 				setFoundSave(saveMovies);
+				setSave(list);
 				localStorage.setItem("saveMovies", JSON.stringify(list));
 
 				setMovies(films.map((movie) => {
@@ -234,12 +235,23 @@ const App = () => {
 	function handleCheckbox(movies, namePage, value) {
 		const film = foundMoveis.filter((film) => film.duration < LENGHT_MOVIE);
 		const saveFilm = foundSave.filter((film) => film.duration < LENGHT_MOVIE);
-
+		console.log(saveFilm)
 		if (namePage === "save-movies") {
-			setFoundSaveShort(film)
+			if(value === true){
+				setSave(saveFilm);
+			}
+			else{
+				setSave(foundSave);
+			}
 			localStorage.setItem("foundMovies", JSON.stringify(film));
 			localStorage.setItem("status", value);
 		} else {
+			if(value === true){
+				setFilm(film);
+			}
+			else{
+				setFilm(foundMoveis);
+			}
 			setFoundMoveisShort(saveFilm)
 			localStorage.setItem("foundSaveMovies", JSON.stringify(saveFilm));
 			// localStorage.setItem("status", value);
@@ -250,9 +262,6 @@ const App = () => {
 	function handleAddMovie(data) {
 		setErrorMessage("");
 		console.log("сохранение");
-		// async function AddMovie() {
-		// 	try {
-		// 		const newMovie = await 
 		MainApi.addMovie(data)
 			.then((newMovie) => {
 
@@ -260,6 +269,7 @@ const App = () => {
 				if (value)
 					handleCheckSave(newMovie.movieId, true)
 				else handleChangeSave(newMovie.movieId, true)
+				setSave([...saveMovies, data]);
 				setSaveMovies([...saveMovies, data]);
 				setFoundSave(saveMovies);
 				console.log(saveMovies)
@@ -310,6 +320,7 @@ const App = () => {
 						});
 						setSaveMovies(list);
 						setFoundSave(saveMovies);
+						// setSave(list);
 						localStorage.setItem("saveMovies", JSON.stringify(list));
 						local.pathname === "saved-movie"
 							? setMovies(movies.map((_movie) => {
@@ -324,7 +335,7 @@ const App = () => {
 									isSave: _movie.nameRU === movie.nameRU ? false : _movie.isSave
 								}
 							}))
-							local.pathname === "saved-movie"
+						local.pathname === "saved-movie"
 							? setFilm(film.map((_movie) => {
 								return {
 									..._movie,
@@ -337,7 +348,7 @@ const App = () => {
 									isSave: _movie.nameRU === movie.nameRU ? false : _movie.isSave
 								}
 							}))
-							setFoundMoveis(movie);
+						setFoundMoveis(movie);
 						const pageValue = JSON.parse(localStorage.getItem("status"));
 						if (pageValue) {
 							handleCheckSave(deleteMovie.movieId, false);
@@ -403,8 +414,8 @@ const App = () => {
 		localStorage.setItem('saveName', film);
 		setFoundSave(list);
 		setFoundSaveShort(foundSave);
-		setSave(setFoundSaveShort);
-		console.log(foundSave);
+		setSave(list);
+		console.log(list);
 		localStorage.setItem('saveMovies', JSON.stringify(list));
 		setData(true);
 	};
@@ -464,7 +475,7 @@ const App = () => {
 								onDeleteMovies={handleDeleteMovies}
 								onClick={handleCheckbox}
 								onSearch={handleSaveSearchFilm}
-								saveMovies={saveMovies}
+								saveMovies={save}
 							/>
 						}
 					/>
