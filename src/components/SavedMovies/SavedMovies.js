@@ -35,10 +35,6 @@ const SavedMovies = (props) => {
 			? JSON.parse(localStorage.getItem("foundSaveMovies"))
 			: JSON.parse(localStorage.getItem("saveMovies"))) || []);
 	}, [data]);
-	// console.log(saveMovies);
-	// React.useEffect(() => {
-	// 	setValueCheckbox(false);
-	// }, []);
 	return (
 		<>
 			<Header
@@ -60,7 +56,7 @@ const SavedMovies = (props) => {
 					isData={data}
 					setData={setData}
 					onDeleteMovies={onDeleteMovies}
-					list={saveMovies}
+					list={list}
 					/>
 				)
 				}   

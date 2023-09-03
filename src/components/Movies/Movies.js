@@ -42,71 +42,22 @@ const Movies = (props) => {
 
 	const [valueCheckbox, setValueCheckbox] = React.useState(JSON.parse(localStorage.getItem("status")));
 	
-	// const [listMovie, setlistMovie] = React.useState([]);
-	// React.useEffect(() => {
-	// 	setData(false);
-	// 	setlistMovie((valueCheckbox
-	// 		? JSON.parse(localStorage.getItem("foundMovies"))
-	// 		: JSON.parse(localStorage.getItem("movies"))) || []);
-	// }, [data]);
-		// const listMovie = valueCheckbox
-		// 	? JSON.parse(localStorage.getItem("foundMovies")) || []
-		// 	: JSON.parse(localStorage.getItem("movies")) || [];
+	const [listMovie, setlistMovie] = React.useState([]);
+	React.useEffect(() => {
+		setData(false);
+		setlistMovie((valueCheckbox
+			? JSON.parse(localStorage.getItem("foundMovies"))
+			: JSON.parse(localStorage.getItem("movies"))) || []);
+			console.log("dfvjkosndo")
 
+	}, [data]);
 
-	// const pageWidth = useChangePage().width;
-	// const [loadMoreNumber, setLoadMoreNumber] = React.useState(limitStart(pageWidth));
-	// const initialLimit = limitMovie(pageWidth);
-	// const [index, setIndex] = React.useState(initialLimit);
-
-	// React.useEffect(() => {
-	// 	setLoadMoreNumber(limitStart(pageWidth))
-	// }, [pageWidth]);
-
-	// // функции
-	// function limitMovie(data) {
-	// 	if (data < MEDIUM_WIDTH) {
-	// 		return SMALL_SEARCH;
-	// 	} else {
-	// 		return MEDIUM_SEARCH;
-	// 	}
-	// }
-	// function limitStart(data) {
-	// 	if (data < MEDIUM_WIDTH) {
-	// 		return SMALL_ADD_MOVIES;
-	// 	} else {
-	// 		return ADD_MOVIES;
-	// 	}
-	// }
-
-	// const [list, setList] = React.useState(movies.slice(0, index));
-	// const [showMore, setShowMore] = React.useState(movies.length > index);
-	// React.useEffect(() => {
-	// 	setData(false);
-	// 	if (movies.length === list.length) {
-	// 		setList(list => list.map(item => movies.find(i => i.id === item.id)));
-	// 	} else {
-	// 		(movies.slice(0, index));
-	// 		setShowMore(movies.length > index)
-	// 		setIndex(initialLimit);
-	// 	}
-	// }, [data]);
 
 	function onCheckboxChange() {
 		setValueCheckbox(!valueCheckbox);
 		onClick(movies, "movies", !valueCheckbox);
 		localStorage.setItem("status", JSON.parse(!valueCheckbox));
 	};
-
-	// const handleAddMovie = () => {
-	// 	const newIndex = index + loadMoreNumber;
-	// 	const newShowMore = newIndex < movies.length - 1;
-	// 	const newList = list.concat(movies.slice(index, newIndex));
-	// 	console.log(newList);
-	// 	setIndex(newIndex);
-	// 	setList(newList);
-	// 	setShowMore(newShowMore);
-	// };
 
 	return (
 		<>
@@ -131,7 +82,7 @@ const Movies = (props) => {
 						setData={setData}
 						onAddMovies={onAddMovies}
 						onDeleteMovies={onDeleteMovies}
-						list={movies}
+						list={listMovie}
 					/>
 				)
 				}

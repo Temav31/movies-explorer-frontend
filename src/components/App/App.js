@@ -197,6 +197,7 @@ const App = () => {
 						),
 					}
 				}));
+				localStorage.setItem('movies', JSON.stringify(movies));
 				setFilm(film.map((movie) => {
 					return {
 						...movie,
@@ -228,6 +229,7 @@ const App = () => {
 		localStorage.setItem('movies', JSON.stringify(list));
 		localStorage.setItem('foundMovies', JSON.stringify(shortList));
 		console.log(list);
+		console.log(shortList);
 		setFoundMoveis(list);
 		setFoundMoveisShort(list);
 		setFilm(list);
@@ -291,9 +293,8 @@ const App = () => {
 						// isSave: _movie.id === newMovie.movieId || _movie.isSave
 					}
 				}))
-				localStorage.setItem("saveMovies", JSON.stringify(saveMovies))
 				setData(true);
-
+				localStorage.setItem("saveMovies", JSON.stringify(saveMovies))
 			})
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
@@ -352,13 +353,14 @@ const App = () => {
 								}
 							}))
 						setFoundMoveis(movie);
+						setData(true);
+						localStorage.setItem("saveMovies", JSON.stringify(saveMovies));
 						const pageValue = JSON.parse(localStorage.getItem("status"));
 						if (pageValue) {
 							handleCheckSave(deleteMovie.movieId, false);
 						} else {
 							handleChangeSave(deleteMovie.movieId, false);
 						}
-						setData(true);
 					}).catch((err) => {
 						console.log(`Ошибка: ${err}`);
 					})
@@ -401,9 +403,9 @@ const App = () => {
 		})
 		);
 		if (page) {
-			localStorage.setItem("foundSaveMovies", JSON.stringify(data));
+			localStorage.setItem("foundSaveMovies", JSON.stringify(movies));
 		} else {
-			localStorage.setItem("foundMovies", JSON.stringify(data));
+			localStorage.setItem("foundMovies", JSON.stringify(saveMovies));
 
 		}
 		setData(true);

@@ -25,7 +25,7 @@ const MoviesCardList = (props) => {
 		onDeleteMovies,
 		list,
 	} = props;
-	console.log(list);
+	// console.log(list);
 	const location = useLocation();
 	const [pageWidth, setPageWidth] = React.useState(BIG_WIDTH);
 	// лимит карточек
