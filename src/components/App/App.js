@@ -446,7 +446,7 @@ const App = () => {
 								onSearch={handleSearchFilm}
 								data={data}
 								setData={setData}
-								movies={movies}
+								movies={film}
 							// message={errorMovies}
 							/>
 						}
