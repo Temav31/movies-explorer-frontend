@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 // импорт блоков
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
-// import MoviesButton from "../MoviesButton/MoviesButton";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 // компонент
@@ -55,43 +54,43 @@ const Movies = (props) => {
 		// 	: JSON.parse(localStorage.getItem("movies")) || [];
 
 
-	const pageWidth = useChangePage().width;
-	const [loadMoreNumber, setLoadMoreNumber] = React.useState(limitStart(pageWidth));
-	const initialLimit = limitMovie(pageWidth);
-	const [index, setIndex] = React.useState(initialLimit);
+	// const pageWidth = useChangePage().width;
+	// const [loadMoreNumber, setLoadMoreNumber] = React.useState(limitStart(pageWidth));
+	// const initialLimit = limitMovie(pageWidth);
+	// const [index, setIndex] = React.useState(initialLimit);
 
-	React.useEffect(() => {
-		setLoadMoreNumber(limitStart(pageWidth))
-	}, [pageWidth]);
+	// React.useEffect(() => {
+	// 	setLoadMoreNumber(limitStart(pageWidth))
+	// }, [pageWidth]);
 
-	// функции
-	function limitMovie(data) {
-		if (data < MEDIUM_WIDTH) {
-			return SMALL_SEARCH;
-		} else {
-			return MEDIUM_SEARCH;
-		}
-	}
-	function limitStart(data) {
-		if (data < MEDIUM_WIDTH) {
-			return SMALL_ADD_MOVIES;
-		} else {
-			return ADD_MOVIES;
-		}
-	}
+	// // функции
+	// function limitMovie(data) {
+	// 	if (data < MEDIUM_WIDTH) {
+	// 		return SMALL_SEARCH;
+	// 	} else {
+	// 		return MEDIUM_SEARCH;
+	// 	}
+	// }
+	// function limitStart(data) {
+	// 	if (data < MEDIUM_WIDTH) {
+	// 		return SMALL_ADD_MOVIES;
+	// 	} else {
+	// 		return ADD_MOVIES;
+	// 	}
+	// }
 
-	const [list, setList] = React.useState(movies.slice(0, index));
-	const [showMore, setShowMore] = React.useState(movies.length > index);
-	React.useEffect(() => {
-		setData(false);
-		if (movies.length === list.length) {
-			setList(list => list.map(item => movies.find(i => i.id === item.id)));
-		} else {
-			(movies.slice(0, index));
-			setShowMore(movies.length > index)
-			setIndex(initialLimit);
-		}
-	}, [data]);
+	// const [list, setList] = React.useState(movies.slice(0, index));
+	// const [showMore, setShowMore] = React.useState(movies.length > index);
+	// React.useEffect(() => {
+	// 	setData(false);
+	// 	if (movies.length === list.length) {
+	// 		setList(list => list.map(item => movies.find(i => i.id === item.id)));
+	// 	} else {
+	// 		(movies.slice(0, index));
+	// 		setShowMore(movies.length > index)
+	// 		setIndex(initialLimit);
+	// 	}
+	// }, [data]);
 
 	function onCheckboxChange() {
 		setValueCheckbox(!valueCheckbox);
@@ -99,15 +98,15 @@ const Movies = (props) => {
 		localStorage.setItem("status", JSON.parse(!valueCheckbox));
 	};
 
-	const handleAddMovie = () => {
-		const newIndex = index + loadMoreNumber;
-		const newShowMore = newIndex < movies.length - 1;
-		const newList = list.concat(movies.slice(index, newIndex));
-		console.log(newList);
-		setIndex(newIndex);
-		setList(newList);
-		setShowMore(newShowMore);
-	};
+	// const handleAddMovie = () => {
+	// 	const newIndex = index + loadMoreNumber;
+	// 	const newShowMore = newIndex < movies.length - 1;
+	// 	const newList = list.concat(movies.slice(index, newIndex));
+	// 	console.log(newList);
+	// 	setIndex(newIndex);
+	// 	setList(newList);
+	// 	setShowMore(newShowMore);
+	// };
 
 	return (
 		<>
@@ -132,11 +131,11 @@ const Movies = (props) => {
 						setData={setData}
 						onAddMovies={onAddMovies}
 						onDeleteMovies={onDeleteMovies}
-						list={list}
+						list={movies}
 					/>
 				)
 				}
-				{showMore && <MoviesButton onClick={handleAddMovie} />}
+				{/* {showMore && <MoviesButton onClick={handleAddMovie} />} */}
 			</main>
 			{/* Конец основного блока */}
 			<Footer />
