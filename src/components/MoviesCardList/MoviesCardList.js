@@ -32,7 +32,7 @@ const MoviesCardList = (props) => {
 	return (
 		<section>
 			<p className="movies-cardlist__text">
-				{list.length === 0  ? "Ничего не найдено" : ""}
+				{/* {list.length === 0  ? "Ничего не найдено" : ""} */}
 				</p>
 			<div className={`movies-cardlist
 		${location.pathname === "/saved-movies"

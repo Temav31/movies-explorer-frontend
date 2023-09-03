@@ -15,7 +15,7 @@ const FilterCheckbox = (props) => {
 					className="filter-checkbox__input"
 					placeholder="Фильм"
 					type="checkbox"
-					onChange={onCheckboxChange}
+					// onChange={onCheckboxChange}
 					checked={!value}
 					onClick={onCheckboxChange}
 				/>

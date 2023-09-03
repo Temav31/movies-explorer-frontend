@@ -38,9 +38,11 @@ const Movies = (props) => {
 		onSearch,
 		data,
 		setData,
+		movies
 	} = props;
 
 	const [valueCheckbox, setValueCheckbox] = React.useState(JSON.parse(localStorage.getItem("status")));
+	
 	// const [listMovie, setlistMovie] = React.useState([]);
 	// React.useEffect(() => {
 	// 	setData(false);
@@ -48,9 +50,9 @@ const Movies = (props) => {
 	// 		? JSON.parse(localStorage.getItem("foundMovies"))
 	// 		: JSON.parse(localStorage.getItem("movies"))) || []);
 	// }, [data]);
-		const listMovie = valueCheckbox
-			? JSON.parse(localStorage.getItem("foundMovies")) || []
-			: JSON.parse(localStorage.getItem("movies")) || [];
+		// const listMovie = valueCheckbox
+		// 	? JSON.parse(localStorage.getItem("foundMovies")) || []
+		// 	: JSON.parse(localStorage.getItem("movies")) || [];
 
 
 	const pageWidth = useChangePage().width;
@@ -78,29 +80,29 @@ const Movies = (props) => {
 		}
 	}
 
-	const [list, setList] = React.useState(listMovie.slice(0, index));
-	const [showMore, setShowMore] = React.useState(listMovie.length > index);
+	const [list, setList] = React.useState(movies.slice(0, index));
+	const [showMore, setShowMore] = React.useState(movies.length > index);
 	React.useEffect(() => {
 		setData(false);
-		if (listMovie.length === list.length) {
-			setList(list => list.map(item => listMovie.find(i => i.id === item.id)));
+		if (movies.length === list.length) {
+			setList(list => list.map(item => movies.find(i => i.id === item.id)));
 		} else {
-			(listMovie.slice(0, index));
-			setShowMore(listMovie.length > index)
+			(movies.slice(0, index));
+			setShowMore(movies.length > index)
 			setIndex(initialLimit);
 		}
 	}, [data]);
 
 	function onCheckboxChange() {
 		setValueCheckbox(!valueCheckbox);
-		onClick(listMovie, "movies", !valueCheckbox);
+		onClick(movies, "movies", !valueCheckbox);
 		localStorage.setItem("status", JSON.parse(!valueCheckbox));
 	};
 
 	const handleAddMovie = () => {
 		const newIndex = index + loadMoreNumber;
-		const newShowMore = newIndex < listMovie.length - 1;
-		const newList = list.concat(listMovie.slice(index, newIndex));
+		const newShowMore = newIndex < movies.length - 1;
+		const newList = list.concat(movies.slice(index, newIndex));
 		console.log(newList);
 		setIndex(newIndex);
 		setList(newList);
