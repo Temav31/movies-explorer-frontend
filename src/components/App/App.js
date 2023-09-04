@@ -265,7 +265,7 @@ const App = () => {
 			setSave(foundSave);
 		}
 		localStorage.setItem("foundSaveMovies", JSON.stringify(foundSave));
-		localStorage.setItem("statusSave", value);
+		// localStorage.setItem("statusSave", value);
 		setData(true);
 	};
 	function handleCheckboxMovies(value) {
@@ -288,7 +288,7 @@ const App = () => {
 		setValueCheckbox(!valueCheckbox)
 		console.log(valueCheckbox)
 		localStorage.setItem("foundMovies", JSON.stringify(film));
-		localStorage.setItem("status", false);
+		// localStorage.setItem("status", false);
 		setStart(false);
 		setData(true);
 	};
@@ -458,7 +458,6 @@ const App = () => {
 		setSave(list);
 		console.log(list);
 		localStorage.setItem('saveMovies', JSON.stringify(list));
-		localStorage.setItem("status", JSON.stringify(false));
 
 		setData(true);
 	};

@@ -45,7 +45,7 @@ const Movies = (props) => {
 	} = props;
 
 	const [valueCheckbox, setValueCheckbox] = React.useState(false);
-	console.log(valueCheckbox)
+	// console.log(valueCheckbox)
 	const [name, setName] = useState(localStorage.getItem('name'));
 
 	const [listMovie, setlistMovie] = React.useState([]);
@@ -81,15 +81,16 @@ const Movies = (props) => {
 	// }, [data, movies, onDeleteMovies,onAddMovies]);
 
 	function handleMovie() {
-		setlistMovie(movies);
+		// setlistMovie(movies);
 
 	}
 
 	function onCheckboxChange() {
 		setValueCheckbox(!valueCheckbox);
 		onClick(!valueCheckbox);
-		localStorage.setItem("statusSave", valueCheckbox);
-		// localStorage.setItem("status", JSON.parse(!valueCheckbox));
+		console.log(valueCheckbox)
+		// localStorage.setItem("statusSave", valueCheckbox);
+		localStorage.setItem("status", valueCheckbox);
 	};
 
 	return (
@@ -116,7 +117,6 @@ const Movies = (props) => {
 						onAddMovies={onAddMovies}
 						onDeleteMovies={onDeleteMovies}
 						list={value ? list : movies}
-					// list={movies}
 					/>
 				)
 				}
