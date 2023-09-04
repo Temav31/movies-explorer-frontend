@@ -212,7 +212,7 @@ const App = () => {
 			.finally(() => {
 				setLoading(false);
 			})
-		// setTimeout(handleGet(), 4000);
+		setTimeout(handleGet(), 4000);
 	}, [currentUser]);
 	function handleGet() {
 		console.log("hi")
