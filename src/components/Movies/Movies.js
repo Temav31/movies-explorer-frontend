@@ -48,42 +48,39 @@ const Movies = (props) => {
 	// console.log(valueCheckbox)
 	const [name, setName] = useState(localStorage.getItem('name'));
 
-	const [listMovie, setlistMovie] = React.useState([]);
-	React.useEffect(() => {
-		setData(false);
-		// setlistMovie((valueCheckbox
-		// 	? JSON.parse(localStorage.getItem("foundMovies"))
-		// 	: JSON.parse(localStorage.getItem("movies"))) || []);
-		setlistMovie(JSON.parse(localStorage.getItem("foundMovies")) || []);
-	}, [data]);
-	// const [albom, setAlbom] = React.useState([]);
-	// const [film, setFilm] = React.useState([]);
 	// const [listMovie, setlistMovie] = React.useState([]);
-
-	// 	React.useEffect(() => {
+	// React.useEffect(() => {
 	// 	setData(false);
-	// 	if (name === "") {
-	// 		setAlbom(list.filter((film) => film.duration < LENGHT_MOVIE));
-	// 		setFilm(albom)
-	// 		// list = movies;
-	// 	} else {
-	// 		setAlbom(list.filter((item) => item.nameRU.toLowerCase().includes(name.toLowerCase())));
-	// 		setFilm(albom.filter((film) => film.duration < LENGHT_MOVIE));
-	// 	}
-	// 	if (valueCheckbox !== true) {
-	// 		setlistMovie(film);
-	// 	}
-	// 	else {
-	// 		setlistMovie(albom);
-	// 	}
-	// 	// setTimeout(handleMovie(), 10000);
-	// 	console.log(listMovie)
-	// }, [data, movies, onDeleteMovies,onAddMovies]);
+	// 	setlistMovie((valueCheckbox
+	// 		? JSON.parse(localStorage.getItem("foundMovies"))
+	// 		: JSON.parse(localStorage.getItem("movies"))) || []);
+	// 	// setlistMovie(localStorage.getItem("movies"));
+	// }, [data]);
+	const [albom, setAlbom] = React.useState([]);
+	const [film, setFilm] = React.useState([]);
+	const [listMovie, setlistMovie] = React.useState([]);
 
-	function handleMovie() {
-		// setlistMovie(movies);
+		React.useEffect(() => {
+		setData(false);
+		if (name === "") {
+			setAlbom(list.filter((film) => film.duration < LENGHT_MOVIE));
+			setFilm(albom)
+			// list = movies;
+		} else {
+			setAlbom(list.filter((item) => item.nameRU.toLowerCase().includes(name.toLowerCase())));
+			setFilm(albom.filter((film) => film.duration < LENGHT_MOVIE));
+		}
+		if (valueCheckbox === true) {
+			setlistMovie(film);
+		}
+		else {
+			setlistMovie(albom);
+		}
+		// setTimeout(handleMovie(), 10000);
+		console.log(listMovie)
+	}, [data, movies, onDeleteMovies,onAddMovies]);
 
-	}
+
 
 	function onCheckboxChange() {
 		setValueCheckbox(!valueCheckbox);
@@ -116,7 +113,7 @@ const Movies = (props) => {
 						setData={setData}
 						onAddMovies={onAddMovies}
 						onDeleteMovies={onDeleteMovies}
-						list={value ? list : movies}
+						list={value ? listMovie : movies}
 					/>
 				)
 				}
