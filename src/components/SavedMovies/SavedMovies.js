@@ -21,7 +21,7 @@ const SavedMovies = (props) => {
 		onSearch,
 		saveMovies
 	} = props;
-	const [valueCheckbox, setValueCheckbox] = React.useState(false);
+	const [valueCheckbox, setValueCheckbox] = React.useState(localStorage.getItem("statusSave"));
 	const [list, setList] = React.useState([]);
 
 	function onCheckboxChange() {

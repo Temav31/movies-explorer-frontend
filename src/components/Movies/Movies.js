@@ -24,7 +24,9 @@ import {
 	SMALL_ADD_MOVIES,
 	ADD_MOVIES,
 } from "../../utils/constant";
-
+// import { flushSync } from 'react-dom';
+// константы
+import { LENGHT_MOVIE } from '../../utils/constant';
 
 
 const Movies = (props) => {
@@ -43,23 +45,51 @@ const Movies = (props) => {
 	} = props;
 
 	const [valueCheckbox, setValueCheckbox] = React.useState(localStorage.getItem("status"));
-	// const [name, setName] = useState(localStorage.getItem('name'));
+	console.log(valueCheckbox)
+	const [name, setName] = useState(localStorage.getItem('name'));
 
 	// const [listMovie, setlistMovie] = React.useState([]);
 	// React.useEffect(() => {
 	// 	setData(false);
-	// 	setlistMovie((valueCheckbox
-	// 		? JSON.parse(localStorage.getItem("foundMovies"))
-	// 		: JSON.parse(localStorage.getItem("movies"))) || []);
-	// 		// console.log(movies)
-	// 		// console.log(name)
+	// 	// setlistMovie((valueCheckbox
+	// 	// 	? JSON.parse(localStorage.getItem("foundMovies"))
+	// 	// 	: JSON.parse(localStorage.getItem("movies"))) || []);
+	// 	setlistMovie(JSON.parse(localStorage.getItem("foundMovies")) || []);
 	// }, [data]);
+	const [albom, setAlbom] = React.useState([]);
+	const [film, setFilm] = React.useState([]);
+	const [listMovie, setlistMovie] = React.useState([]);
 
+		React.useEffect(() => {
+		setData(false);
+		if (name === "") {
+			setAlbom(list.filter((film) => film.duration < LENGHT_MOVIE));
+			setFilm(albom)
+			// list = movies;
+		} else {
+			setAlbom(list.filter((item) => item.nameRU.toLowerCase().includes(name.toLowerCase())));
+			setFilm(albom.filter((film) => film.duration < LENGHT_MOVIE));
+		}
+		if (valueCheckbox !== true) {
+			setlistMovie(film);
+		}
+		else {
+			setlistMovie(albom);
+		}
+		// setTimeout(handleMovie(), 10000);
+		console.log(listMovie)
+	}, [data, movies, onDeleteMovies,onAddMovies]);
+
+	function handleMovie() {
+		setlistMovie(movies);
+
+	}
 
 	function onCheckboxChange() {
 		setValueCheckbox(!valueCheckbox);
 		onClick(!valueCheckbox);
-		localStorage.setItem("status", JSON.parse(!valueCheckbox));
+		localStorage.setItem("statusSave", valueCheckbox);
+		// localStorage.setItem("status", JSON.parse(!valueCheckbox));
 	};
 
 	return (
@@ -85,8 +115,8 @@ const Movies = (props) => {
 						setData={setData}
 						onAddMovies={onAddMovies}
 						onDeleteMovies={onDeleteMovies}
-						// list={value ? listMovie : movies}
-						list={movies}
+						list={value ? listMovie : movies}
+					// list={movies}
 					/>
 				)
 				}

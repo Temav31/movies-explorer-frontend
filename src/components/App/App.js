@@ -212,12 +212,12 @@ const App = () => {
 			.finally(() => {
 				setLoading(false);
 			})
-		setTimeout(handleGet(), 4000);
+		// setTimeout(handleGet(), 4000);
 	}, [currentUser]);
-	function handleGet() {
-		console.log("hi")
-		console.log(movies)
-	}
+	// function handleGet() {
+	// 	console.log("hi")
+	// 	console.log(movies)
+	// }
 
 	// функция поиска фильмов
 	function handleSearchFilm(film) {
@@ -233,12 +233,12 @@ const App = () => {
 			shortList = movies.filter((item) => item.nameRU.toLowerCase().includes(film.toLowerCase()));
 		}
 		setName(film);
-		localStorage.setItem('movies', JSON.stringify(list));
-		localStorage.setItem('foundMovies', JSON.stringify(shortList));
 		setFoundMoveis(shortList);
 		setFoundMoveisShort(shortList);
 		setFilm(shortList);
 		setLoading(false);
+		localStorage.setItem('movies', JSON.stringify(list));
+		localStorage.setItem('foundMovies', JSON.stringify(shortList));
 		setStart(false);
 		setData(true);
 	};
@@ -264,7 +264,7 @@ const App = () => {
 			setSave(list);
 		}
 		localStorage.setItem("foundSaveMovies", JSON.stringify(list));
-		localStorage.setItem("status", value);
+		localStorage.setItem("statusSave", value);
 		setData(true);
 	};
 	function handleCheckboxMovies(value) {
@@ -287,7 +287,7 @@ const App = () => {
 		setValueCheckbox(!valueCheckbox)
 		console.log(valueCheckbox)
 		localStorage.setItem("foundMovies", JSON.stringify(film));
-		localStorage.setItem("status", valueCheckbox);
+		localStorage.setItem("status", false);
 		setStart(false);
 		setData(true);
 	};
@@ -307,7 +307,7 @@ const App = () => {
 				}))
 				setErrorMessage("");
 
-				const value = JSON.parse(localStorage.getItem("status"));
+				const value = localStorage.getItem("status");
 				if (value)
 					handleCheckSave(newMovie.movieId, true)
 				else handleChangeSave(newMovie.movieId, true)
@@ -321,10 +321,10 @@ const App = () => {
 				setFoundMoveis(movies);
 
 				// setFilm(movies)
-
 				setData(true);
-				// localStorage.setItem("movies", JSON.stringify(movies))
-				// localStorage.setItem("saveMovies", JSON.stringify(saveMovies))
+				setData(false);
+				localStorage.setItem("movies", JSON.stringify(movies))
+				localStorage.setItem("saveMovies", JSON.stringify(saveMovies))
 			})
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
@@ -391,7 +391,7 @@ const App = () => {
 						setFoundMoveis(movie);
 						setData(true);
 						// localStorage.setItem("saveMovies", JSON.stringify(saveMovies));
-						const pageValue = JSON.parse(localStorage.getItem("status"));
+						const pageValue = localStorage.getItem("status");
 						if (pageValue) {
 							handleCheckSave(deleteMovie.movieId, false);
 						} else {
