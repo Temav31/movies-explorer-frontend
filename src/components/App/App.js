@@ -383,10 +383,10 @@ const App = () => {
 									isSave: _movie.nameRU === movie.nameRU ? false : _movie.isSave
 								}
 							}))
-						const saveList = save.filter((film) => {
-							return !film._id.includes(id);
-						});
-						setSave(saveList);
+						// const saveList = save.filter((film) => {
+						// 	return !film._id.includes(id);
+						// });
+						setSave(list);
 
 						setFoundMoveis(movie);
 						setData(true);
