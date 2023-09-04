@@ -60,7 +60,7 @@ const App = () => {
 	const [formBlock, setFormBlock] = useState(false);
 	const [data, setData] = useState(false);
 	const [valueCheckbox, setValueCheckbox] = React.useState(localStorage.getItem("status"));
-	console.log(valueCheckbox)
+	// console.log(valueCheckbox)
 
 
 	const [start, setStart] = useState(true);
@@ -245,25 +245,26 @@ const App = () => {
 	// функция проверка короткометраждек в сохр фильмах
 	function handleCheckbox(value) {
 		console.log(nameSave)
-		let list;
-		let film;
-		if (nameSave === "") {
-			film = saveMovies.filter((film) => film.duration < LENGHT_MOVIE);
-			list = saveMovies;
-		} else {
-			list = saveMovies.filter((item) => item.nameRU.toLowerCase().includes(nameSave.toLowerCase()));
-			film = list.filter((film) => film.duration < LENGHT_MOVIE);
-		}
-		// const saveFilm = foundSave.filter((film) => film.duration < LENGHT_MOVIE);
-		console.log(film)
+		// let list;
+		// let film;
+		// if (nameSave === "") {
+		// 	film = saveMovies.filter((film) => film.duration < LENGHT_MOVIE);
+		// 	list = saveMovies;
+		// } else {
+		// 	list = saveMovies.filter((item) => item.nameRU.toLowerCase().includes(nameSave.toLowerCase()));
+		// 	film = list.filter((film) => film.duration < LENGHT_MOVIE);
+		// }
+		const saveFilm = foundSave.filter((film) => film.duration < LENGHT_MOVIE);
+
+		console.log(saveFilm)
 		if (value === true) {
 			// console.log("hi");
-			setSave(film);
+			setSave(saveFilm);
 		}
 		else {
-			setSave(list);
+			setSave(foundSave);
 		}
-		localStorage.setItem("foundSaveMovies", JSON.stringify(list));
+		localStorage.setItem("foundSaveMovies", JSON.stringify(foundSave));
 		localStorage.setItem("statusSave", value);
 		setData(true);
 	};
@@ -322,7 +323,6 @@ const App = () => {
 
 				// setFilm(movies)
 				setData(true);
-				setData(false);
 				localStorage.setItem("movies", JSON.stringify(movies))
 				localStorage.setItem("saveMovies", JSON.stringify(saveMovies))
 			})
@@ -330,7 +330,6 @@ const App = () => {
 				console.log(`Ошибка: ${err}`);
 			})
 	};
-
 	// функция удаления фильмов
 	function handleDeleteMovies(movie) {
 		MainApi.getMoviesList()
