@@ -59,7 +59,8 @@ const App = () => {
 	// блокировка формы
 	const [formBlock, setFormBlock] = useState(false);
 	const [data, setData] = useState(false);
-	const [valueCheckbox, setValueCheckbox] = React.useState(localStorage.getItem("status"));
+	// const [valueCheckbox, setValueCheckbox] = React.useState(localStorage.getItem("status"));
+	const [valueCheckbox, setValueCheckbox] = React.useState(false);
 	// console.log(valueCheckbox)
 
 

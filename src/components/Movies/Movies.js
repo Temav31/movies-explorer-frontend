@@ -63,8 +63,8 @@ const Movies = (props) => {
 		React.useEffect(() => {
 		setData(false);
 		if (name === "") {
-			setAlbom(list.filter((film) => film.duration < LENGHT_MOVIE));
-			setFilm(albom)
+			setFilm(list.filter((film) => film.duration < LENGHT_MOVIE));
+			setAlbom(list)
 			// list = movies;
 		} else {
 			setAlbom(list.filter((item) => item.nameRU.toLowerCase().includes(name.toLowerCase())));
@@ -74,10 +74,11 @@ const Movies = (props) => {
 			setlistMovie(film);
 		}
 		else {
+			// console.log("hi")
 			setlistMovie(albom);
 		}
 		// setTimeout(handleMovie(), 10000);
-		console.log(listMovie)
+		// console.log(listMovie)
 	}, [data, movies, onDeleteMovies,onAddMovies]);
 
 
