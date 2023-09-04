@@ -26,7 +26,7 @@ const SavedMovies = (props) => {
 
 	function onCheckboxChange() {
 		setValueCheckbox(!valueCheckbox);
-		onClick(saveMovies, "saved-movies", !valueCheckbox);
+		onClick(!valueCheckbox);
 	};
 	// React.useEffect(() => {
 	// 	// console.log("dfjibghvfdrio");

@@ -42,21 +42,23 @@ const Movies = (props) => {
 		list,
 	} = props;
 
-	const [valueCheckbox, setValueCheckbox] = React.useState(JSON.parse(localStorage.getItem("status")));
+	const [valueCheckbox, setValueCheckbox] = React.useState(localStorage.getItem("status"));
+	// const [name, setName] = useState(localStorage.getItem('name'));
 
-	const [listMovie, setlistMovie] = React.useState([]);
-	React.useEffect(() => {
-		setData(false);
-		setlistMovie((valueCheckbox
-			? JSON.parse(localStorage.getItem("foundMovies"))
-			: JSON.parse(localStorage.getItem("movies"))) || []);
-
-	}, [data]);
+	// const [listMovie, setlistMovie] = React.useState([]);
+	// React.useEffect(() => {
+	// 	setData(false);
+	// 	setlistMovie((valueCheckbox
+	// 		? JSON.parse(localStorage.getItem("foundMovies"))
+	// 		: JSON.parse(localStorage.getItem("movies"))) || []);
+	// 		// console.log(movies)
+	// 		// console.log(name)
+	// }, [data]);
 
 
 	function onCheckboxChange() {
 		setValueCheckbox(!valueCheckbox);
-		onClick(movies, "movies", !valueCheckbox);
+		onClick(!valueCheckbox);
 		localStorage.setItem("status", JSON.parse(!valueCheckbox));
 	};
 
@@ -83,7 +85,8 @@ const Movies = (props) => {
 						setData={setData}
 						onAddMovies={onAddMovies}
 						onDeleteMovies={onDeleteMovies}
-						list={value ? list : movies}
+						// list={value ? listMovie : movies}
+						list={movies}
 					/>
 				)
 				}

@@ -50,8 +50,8 @@ const App = () => {
 	const [foundSaveShort, setFoundSaveShort] = useState([]);
 	const [film, setFilm] = useState([]);
 	const [save, setSave] = useState("");
-	const [name, setName] = useState("");
-	const [nameSave, setNameSave] = useState([]);
+	const [name, setName] = useState(localStorage.getItem('name'));
+	const [nameSave, setNameSave] = useState(localStorage.getItem('saveName'));
 	// const [saveFoundMovies, setSaveFoundMovies] = React.useState([]);
 	// ошибки регистрации и авторизации
 	const [errorMessage, setErrorMessage] = React.useState("");
@@ -59,6 +59,9 @@ const App = () => {
 	// блокировка формы
 	const [formBlock, setFormBlock] = useState(false);
 	const [data, setData] = useState(false);
+	const [valueCheckbox, setValueCheckbox] = React.useState(localStorage.getItem("status"));
+	console.log(valueCheckbox)
+
 
 	const [start, setStart] = useState(true);
 	// пользователь 
@@ -70,7 +73,7 @@ const App = () => {
 	// закрытие попапа
 	function closePopup() {
 		setIsInfoTooltipPopupOpen(false);
-		setErrorMessage("");
+		// setErrorMessage("");
 	}
 	React.useEffect(() => {
 		if (!localStorage.getItem("token")) {
@@ -142,9 +145,9 @@ const App = () => {
 	// функции для редактирования данных
 	function handleUpdateUser(newData) {
 		setFormBlock(true);
-		setErrorMessage("");
 		MainApi.setUserInfo(newData)
 			.then((data) => {
+				setErrorMessage("");
 				setCurrentUser({
 					name: data.name,
 					email: data.email
@@ -177,7 +180,6 @@ const App = () => {
 			return;
 		}
 		setLoading(true);
-
 		console.log("фильмы");
 		Promise
 			.all([MoviesApi.getMovies(), MainApi.getMoviesList()])
@@ -210,88 +212,119 @@ const App = () => {
 			.finally(() => {
 				setLoading(false);
 			})
+		// setTimeout(handleGet(), 4000);
 	}, [currentUser]);
+	function handleGet() {
+		console.log("hi")
+		console.log(movies)
+	}
 
 	// функция поиска фильмов
 	function handleSearchFilm(film) {
 		setLoading(true);
-		console.log("поиск");
-		const list = movies.filter((item) => item.nameRU.toLowerCase().includes(film.toLowerCase()));
-		const shortList = list.filter(((movie) => movie.duration < LENGHT_MOVIE));
-
 		localStorage.setItem('name', film);
+		console.log("поиск");
+		let list;
+		let shortList
+		if (valueCheckbox) {
+			list = movies.filter((item) => item.nameRU.toLowerCase().includes(film.toLowerCase()));
+			shortList = list.filter(((movie) => movie.duration < LENGHT_MOVIE));
+		} else {
+			shortList = movies.filter((item) => item.nameRU.toLowerCase().includes(film.toLowerCase()));
+		}
 		setName(film);
 		localStorage.setItem('movies', JSON.stringify(list));
 		localStorage.setItem('foundMovies', JSON.stringify(shortList));
-		setFoundMoveis(list);
-		setFoundMoveisShort(list);
-		setFilm(list);
+		setFoundMoveis(shortList);
+		setFoundMoveisShort(shortList);
+		setFilm(shortList);
 		setLoading(false);
 		setStart(false);
 		setData(true);
 	};
 	// функция проверка короткометраждек в сохр фильмах
-	function handleCheckbox(movies, namePage, value) {
-		const saveFilm = foundSave.filter((film) => film.duration < LENGHT_MOVIE);
+	function handleCheckbox(value) {
+		console.log(nameSave)
+		let list;
+		let film;
+		if (nameSave === "") {
+			film = saveMovies.filter((film) => film.duration < LENGHT_MOVIE);
+			list = saveMovies;
+		} else {
+			list = saveMovies.filter((item) => item.nameRU.toLowerCase().includes(nameSave.toLowerCase()));
+			film = list.filter((film) => film.duration < LENGHT_MOVIE);
+		}
+		// const saveFilm = foundSave.filter((film) => film.duration < LENGHT_MOVIE);
 		console.log(film)
-			if (value === true) {
-				// console.log("hi");
-				setSave(saveFilm);
-			}
-			else {
-				setSave(foundSave);
-			}
-			localStorage.setItem("foundSaveMovies", JSON.stringify(saveFilm));
-			localStorage.setItem("status", value);
+		if (value === true) {
+			// console.log("hi");
+			setSave(film);
+		}
+		else {
+			setSave(list);
+		}
+		localStorage.setItem("foundSaveMovies", JSON.stringify(list));
+		localStorage.setItem("status", value);
 		setData(true);
 	};
-	// функция проверка короткометраждек в сохр фильмах
-	function handleCheckboxMovies(movies, namePage, value) {
-		const film = foundMoveis.filter((film) => film.duration < LENGHT_MOVIE);
-		console.log(film)
+	function handleCheckboxMovies(value) {
+		console.log(name)
+		let list;
+		let film;
+		if (name === "") {
+			film = movies.filter((film) => film.duration < LENGHT_MOVIE);
+			list = movies;
+		} else {
+			list = movies.filter((item) => item.nameRU.toLowerCase().includes(name.toLowerCase()));
+			film = list.filter((film) => film.duration < LENGHT_MOVIE);
+		}
 		if (value === true) {
 			setFilm(film);
 		}
 		else {
-			setFilm(foundMoveis);
+			setFilm(list);
 		}
+		setValueCheckbox(!valueCheckbox)
+		console.log(valueCheckbox)
 		localStorage.setItem("foundMovies", JSON.stringify(film));
-		localStorage.setItem("status", value);
+		localStorage.setItem("status", valueCheckbox);
 		setStart(false);
 		setData(true);
 	};
 	// функция добавления фильма
 	function handleAddMovie(data) {
-		setErrorMessage("");
 		console.log("сохранение");
 		MainApi.addMovie(data)
 			.then((newMovie) => {
+				setSave([...saveMovies, data]);
+				setSaveMovies([...saveMovies, data]);
+				setFoundSave(saveMovies);
+				setFilm(film.map((_movie) => {
+					return {
+						..._movie,
+						isSave: _movie.id === newMovie.movieId || _movie.isSave
+					}
+				}))
+				setErrorMessage("");
 
 				const value = JSON.parse(localStorage.getItem("status"));
 				if (value)
 					handleCheckSave(newMovie.movieId, true)
 				else handleChangeSave(newMovie.movieId, true)
-				setSave([...saveMovies, data]);
-				setSaveMovies([...saveMovies, data]);
-				setFoundSave(saveMovies);
-				console.log(saveMovies)
+
 				setMovies(movies.map((_movie) => {
 					return {
 						..._movie,
 						isSave: _movie.id === newMovie.movieId || _movie.isSave
-						// isSave: _movie.id === newMovie.movieId || _movie.isSave
 					}
 				}))
 				setFoundMoveis(movies);
-				setFilm(film.map((_movie) => {
-					return {
-						..._movie,
-						isSave: _movie.id === newMovie.movieId || _movie.isSave
-						// isSave: _movie.id === newMovie.movieId || _movie.isSave
-					}
-				}))
+
+				// setFilm(movies)
+
 				setData(true);
-				localStorage.setItem("saveMovies", JSON.stringify(saveMovies))
+				// localStorage.setItem("movies", JSON.stringify(movies))
+				// localStorage.setItem("saveMovies", JSON.stringify(saveMovies))
 			})
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
@@ -300,9 +333,9 @@ const App = () => {
 
 	// функция удаления фильмов
 	function handleDeleteMovies(movie) {
-		setErrorMessage("");
 		MainApi.getMoviesList()
 			.then((_savedMovies) => {
+				setErrorMessage("");
 				let id;
 				movie.id
 					? _savedMovies.find((item) => {
@@ -320,9 +353,9 @@ const App = () => {
 							return !film._id.includes(id);
 						});
 						setSaveMovies(list);
-						setFoundSave(saveMovies);
-						setSave(list);
-						localStorage.setItem("saveMovies", JSON.stringify(list));
+
+						// setFoundSave(saveMovies);
+						// localStorage.setItem("saveMovies", JSON.stringify(list));
 						local.pathname === "saved-movie"
 							? setMovies(movies.map((_movie) => {
 								return {
@@ -336,6 +369,7 @@ const App = () => {
 									isSave: _movie.nameRU === movie.nameRU ? false : _movie.isSave
 								}
 							}))
+
 						local.pathname === "saved-movie"
 							? setFilm(film.map((_movie) => {
 								return {
@@ -349,9 +383,14 @@ const App = () => {
 									isSave: _movie.nameRU === movie.nameRU ? false : _movie.isSave
 								}
 							}))
+						const saveList = save.filter((film) => {
+							return !film._id.includes(id);
+						});
+						setSave(saveList);
+
 						setFoundMoveis(movie);
 						setData(true);
-						localStorage.setItem("saveMovies", JSON.stringify(saveMovies));
+						// localStorage.setItem("saveMovies", JSON.stringify(saveMovies));
 						const pageValue = JSON.parse(localStorage.getItem("status"));
 						if (pageValue) {
 							handleCheckSave(deleteMovie.movieId, false);
