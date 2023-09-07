@@ -1,32 +1,10 @@
-import React, { useState, useEffect } from "react";
-// импорт стилей
-// import "./Movies.css";
-// импорт блоков
+import { useState, useEffect } from "react";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-// компонент
-import useChangePage from '../../hooks/useChangePage';
-
 // загрузка
 import Preloader from "../Preloader/Preloader";
-// импорт кнопки
-import MoviesButton from "../MoviesButton/MoviesButton";
-import {
-	MOVIES_LIMIT,
-	SMALL_WIDTH,
-	MEDIUM_WIDTH,
-	BIG_WIDTH,
-	SMALL_SEARCH,
-	MEDIUM_SEARCH,
-	BIG_SEARCH,
-	SMALL_ADD_MOVIES,
-	ADD_MOVIES,
-} from "../../utils/constant";
-// import { flushSync } from 'react-dom';
-// константы
-import { LENGHT_MOVIE } from '../../utils/constant';
 
 
 const Movies = (props) => {
@@ -35,60 +13,53 @@ const Movies = (props) => {
 		preloader,
 		onAddMovies,
 		onDeleteMovies,
-		onClick,
 		onSearch,
 		data,
 		setData,
 		movies,
-		value,
-		list,
+		moviesShort,
 	} = props;
 
-	const [valueCheckbox, setValueCheckbox] = React.useState(false);
-	// console.log(valueCheckbox)
-	const [name, setName] = useState(localStorage.getItem('name'));
+	const [valueCheckbox, setValueCheckbox] = useState(false);
+	const [name, setName] = useState(localStorage.getItem('name') ?? '');
 
-	// const [listMovie, setlistMovie] = React.useState([]);
-	// React.useEffect(() => {
-	// 	setData(false);
-	// 	setlistMovie((valueCheckbox
-	// 		? JSON.parse(localStorage.getItem("foundMovies"))
-	// 		: JSON.parse(localStorage.getItem("movies"))) || []);
-	// 	// setlistMovie(localStorage.getItem("movies"));
-	// }, [data]);
-	const [albom, setAlbom] = React.useState([]);
-	const [film, setFilm] = React.useState([]);
-	const [listMovie, setlistMovie] = React.useState([]);
-
-		React.useEffect(() => {
-		setData(false);
-		if (name === "") {
-			setFilm(list.filter((film) => film.duration < LENGHT_MOVIE));
-			setAlbom(list)
-			// list = movies;
+	const [visibleMovies, setVisibleMovies] = useState([]);
+	useEffect(() => {
+		if (!name) {
+			return setVisibleMovies([]);
+		} else if (movies.length === 0) {
+			return onSearch(name);
+		};
+		if (valueCheckbox) {
+			setVisibleMovies(moviesShort);
 		} else {
-			setAlbom(list.filter((item) => item.nameRU.toLowerCase().includes(name.toLowerCase())));
-			setFilm(albom.filter((film) => film.duration < LENGHT_MOVIE));
+			setVisibleMovies(movies);
 		}
-		if (valueCheckbox === true) {
-			setlistMovie(film);
-		}
-		else {
-			// console.log("hi")
-			setlistMovie(albom);
-		}
-		// setTimeout(handleMovie(), 10000);
-		// console.log(listMovie)
-	}, [data, movies, onDeleteMovies,onAddMovies]);
+
+
+	}, [movies, moviesShort, valueCheckbox]);
+
+	useEffect(() => {
+		localStorage.setItem('foundMovies', JSON.stringify(visibleMovies));
+	}, [visibleMovies]);
+
+
+	useEffect(() => {
+		const lastSearchCheckboxState = localStorage.getItem("status");
+		if (lastSearchCheckboxState === 'true') setValueCheckbox(true);
+	}, []);
+
+
+	const handleOnSearch = (value) => {
+		setName(value);
+		onSearch(value);
+	}
 
 
 
 	function onCheckboxChange() {
 		setValueCheckbox(!valueCheckbox);
-		onClick(!valueCheckbox);
-		console.log(valueCheckbox)
-		// localStorage.setItem("statusSave", valueCheckbox);
-		localStorage.setItem("status", valueCheckbox);
+		localStorage.setItem("status", !valueCheckbox);
 	};
 
 	return (
@@ -96,13 +67,12 @@ const Movies = (props) => {
 			<Header
 				isLogin={isLogin}
 			/>
-			{/* Основной бллок */}
+			{/* Основной блок */}
 			<main>
 				<SearchForm
-					onSearch={onSearch}
+					searchValue={name}
+					onSearch={handleOnSearch}
 					valueCheckbox={valueCheckbox}
-					setData={setData}
-					isData={data}
 					onCheckboxChange={onCheckboxChange}
 				/>
 				{preloader ? (
@@ -110,11 +80,12 @@ const Movies = (props) => {
 				) : (
 					//  "" 
 					<MoviesCardList
+						name={name}
 						isData={data}
 						setData={setData}
 						onAddMovies={onAddMovies}
 						onDeleteMovies={onDeleteMovies}
-						list={value ? listMovie : movies}
+						list={visibleMovies}
 					/>
 				)
 				}

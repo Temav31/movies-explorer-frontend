@@ -1,6 +1,6 @@
 // импорт стилей
 import "./SearchForm.css";
-import React from "react";
+import { useEffect, useState } from "react";
 // локация
 import { useLocation } from "react-router-dom";
 // 
@@ -10,18 +10,14 @@ const SearchForm = (props) => {
 	const {
 		onSearch,
 		valueCheckbox,
-		setData,
-		isData,
 		onCheckboxChange,
+		searchValue,
 	} = props;
 
 	// локация 
 	const location = useLocation();
-	const [value, setValue] = React.useState("");
+	const [value, setValue] = useState(searchValue ? searchValue : '');
 	// const [text, setText] = React.useState("");
-	React.useEffect(() => {
-		setData(false);
-	}, [isData]);
 	
 	const handleSubmit = (event) => {
 		event.preventDefault();
@@ -31,6 +27,7 @@ const SearchForm = (props) => {
 	function handleChange(e) {
 		setValue(e.target.value);
 	}
+
 	const text =
 	location.pathname === "/movies" ?
 		localStorage.getItem("name") :
@@ -45,7 +42,6 @@ const SearchForm = (props) => {
 				<input
 					className="search-form__input"
 					placeholder="Фильм"
-					required
 					defaultValue={text}
 					onChange={handleChange}
 					type='name'

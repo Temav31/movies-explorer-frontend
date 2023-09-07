@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useState } from "react";
 // импорт стилей
 import "./SavedMovies.css";
 // импорт блоков
@@ -14,28 +14,33 @@ const SavedMovies = (props) => {
 	const {
 		isLogin,
 		preloader,
-		data,
-		setData,
 		onDeleteMovies,
-		onClick,
 		onSearch,
-		saveMovies
+		saveMovies,
+		saveMoviesShort
 	} = props;
-	const [valueCheckbox, setValueCheckbox] = React.useState(false);
-	console.log(valueCheckbox)
-	const [list, setList] = React.useState([]);
+	const [valueCheckbox, setValueCheckbox] = useState(false);
+	const [visibleMovies, setVisibleMovies] = useState([]);
 
 	function onCheckboxChange() {
 		setValueCheckbox(!valueCheckbox);
-		onClick(!valueCheckbox);
 	};
-	// React.useEffect(() => {
-	// 	// console.log("dfjibghvfdrio");
-	// 	setData(false);
-	// 	setList((valueCheckbox
-	// 		? JSON.parse(localStorage.getItem("foundSaveMovies"))
-	// 		: JSON.parse(localStorage.getItem("saveMovies"))) || []);
-	// }, [data]);
+
+	useEffect(() => {
+		onSearch('');
+	}, [])
+
+	useEffect(() => {
+
+		if (valueCheckbox) {
+			setVisibleMovies(saveMoviesShort);
+		} else {
+			setVisibleMovies(saveMovies);
+		}
+		
+
+	}, [saveMovies, saveMoviesShort, valueCheckbox]);
+
 	return (
 		<>
 			<Header
@@ -46,18 +51,14 @@ const SavedMovies = (props) => {
 				<SearchForm
 					onSearch={onSearch}
 					valueCheckbox={valueCheckbox}
-					setData={setData}
-					isData={data}
 					onCheckboxChange={onCheckboxChange}
 				/>
 				{preloader ? (
 					<Preloader />
 				) : (
 					<MoviesCardList
-					isData={data}
-					setData={setData}
 					onDeleteMovies={onDeleteMovies}
-					list={saveMovies}
+					list={visibleMovies}
 					/>
 				)
 				}   

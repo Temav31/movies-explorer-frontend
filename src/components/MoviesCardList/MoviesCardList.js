@@ -19,8 +19,6 @@ import {
 // импорт базовых
 const MoviesCardList = (props) => {
 	const {
-		isData,
-		setData,
 		onAddMovies,
 		onDeleteMovies,
 		list,
@@ -61,25 +59,16 @@ const MoviesCardList = (props) => {
 	function handleRemoveWidth() {
 		window.removeEventListener("resize", handleUpdateWidth);
 	}
+
 	// функция заполнения карточек
 	function setCards() {
-		let film = [];
-		list.forEach((item, el) => {
-			if (el < movieLimit) {
-				film.push(item);
-			}
-		});
+		let film = list.slice(0, movieLimit)
 		setCardList(film);
 	};
 	// функция заполнения найденых карточек
 	function setSearchCards(data) {
 		setMovieLimit(data)
-		let film = [];
-		list.forEach((item, el) => {
-			if (el < movieLimit) {
-				film.push(item);
-			}
-		});
+		let film = list.slice(0, movieLimit)
 		setCardList(film);
 	};
 	// функция добавления карточек
@@ -93,7 +82,7 @@ const MoviesCardList = (props) => {
 	// изменение по размеру
 	React.useEffect(() => {
 		handleupdateLimit();
-	}, [pageWidth, list, location]);
+	}, [list]);
 	React.useEffect(() => {
 		handleAddWidth();
 		return () => handleRemoveWidth();
@@ -101,43 +90,32 @@ const MoviesCardList = (props) => {
 	return (
 		<section>
 			<p className="movies-cardlist__text">
-				{list.length === 0 ? "Ничего не найдено" : ""}
+				{props.name !== undefined && !props.name ? 'Введите ключевое слово' : list.length === 0 ? "Ничего не найдено" : ""}
 			</p>
 			<div className={`movies-cardlist
 		${location.pathname === "/saved-movies"
 					? "movies-cardlist__empty"
 					: ""
 				} `}>
-				{location.pathname === "/saved-movies" ? (
-						list.map((movie) => (
-							<MoviesCard
-								movie={movie}
-								// key={movie.id || movie._id}
-								key={movie.id}
-								onSave={onAddMovies}
-								onDelete={onDeleteMovies}
-							/>
-						))
-				) : (
+				{
 					cardList.map((movie) => (
 						<MoviesCard
 							movie={movie}
-							// key={movie.id || movie._id}
-							key={movie.id}
+							key={movie._id || movie.movieId || movie.id}
 							onSave={onAddMovies}
 							onDelete={onDeleteMovies}
 						/>
 					))
-				)}
+				}
 
 			</div>
-			{location.pathname === "/movies" ? (
+			{location.pathname === "/movies" && (
 				<MoviesButton
 					onClick={handleAddMovie}
 					cardList={cardList}
 					isFound={list}
 				/>
-			) : ("")}
+			)}
 		</section>
 	);
 };

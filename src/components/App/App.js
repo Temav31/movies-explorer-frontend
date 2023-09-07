@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import {
 	Route,
 	Routes,
 	useNavigate,
 	Navigate,
-	useHistory,
 	useLocation
-} from "react-router-dom";
+} from 'react-router-dom';
 // стили 
 import "./App.css";
 // импорт основных блоков
@@ -28,43 +27,29 @@ import MoviesApi from "../../utils/MoviesApi";
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 // константы
 import { LENGHT_MOVIE } from '../../utils/constant';
-// import { patternUrl } from '../../utils/constant';
 const App = () => {
 	// навигация 
 	const navigate = useNavigate();
-	const local = useLocation();
 	// авторизация 
-	const [authoriz, setАuthoriz] = React.useState(false);
-	const [newList, setNewList] = React.useState([]);
+	const [authoriz, setAuthoriz] = useState(false);
 	// фильмы 
-	const [movies, setMovies] = React.useState([]);
-	// const [searchMoviesList, setSearchMoviesList] = React.useState([]);
+	const [searchValue, setSearchValue] = useState(localStorage.getItem('name') ?? '');
+	const [movies, setMovies] = useState(JSON.parse(localStorage.getItem('movies') ?? '[]'));
 	// 
-	const [saveMovies, setSaveMovies] = React.useState([]);
-	// const [saveList, setSaveList] = React.useState([]);
+	const [saveMovies, setSaveMovies] = useState([]);
 	// загрузка
+	const [isInitApp, setInitApp] = useState(true);
 	const [loading, setLoading] = useState(false);
-	const [foundMoveis, setFoundMoveis] = useState([]);
-	const [foundSave, setFoundSave] = useState([]);
+	const [foundMoveis, setFoundMoveis] = useState(JSON.parse(localStorage.getItem('foundMoveis') ?? '[]'));
+	const [foundSaveMoveis, setFoundSaveMoveis] = useState([]);
 	const [foundMoveisShort, setFoundMoveisShort] = useState([]);
-	const [foundSaveShort, setFoundSaveShort] = useState([]);
-	const [film, setFilm] = useState([]);
-	const [save, setSave] = useState("");
-	const [name, setName] = useState(localStorage.getItem('name'));
-	const [nameSave, setNameSave] = useState(localStorage.getItem('saveName'));
-	// const [saveFoundMovies, setSaveFoundMovies] = React.useState([]);
+	const [saveMoviesShort, setSaveMoviesShort] = useState([]);
 	// ошибки регистрации и авторизации
-	const [errorMessage, setErrorMessage] = React.useState("");
-	const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = React.useState(false);
+	const [errorMessage, setErrorMessage] = useState("");
+	const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false);
 	// блокировка формы
 	const [formBlock, setFormBlock] = useState(false);
-	const [data, setData] = useState(false);
-	// const [valueCheckbox, setValueCheckbox] = React.useState(localStorage.getItem("status"));
-	const [valueCheckbox, setValueCheckbox] = React.useState(false);
-	// console.log(valueCheckbox)
 
-
-	const [start, setStart] = useState(true);
 	// пользователь 
 	const [currentUser, setCurrentUser] = useState({
 		name: '',
@@ -73,14 +58,10 @@ const App = () => {
 	});
 	// закрытие попапа
 	function closePopup() {
+		setErrorMessage("");
 		setIsInfoTooltipPopupOpen(false);
-		// setErrorMessage("");
 	}
-	React.useEffect(() => {
-		if (!localStorage.getItem("token")) {
-			handleExit();
-		}
-	}, []);
+
 	// авторизация 
 	function handleLogin(dataLog) {
 		setFormBlock(true);
@@ -89,15 +70,16 @@ const App = () => {
 				if (data.token) {
 					console.log("авторизация");
 					localStorage.setItem("token", data.token);
-					setАuthoriz(true);
+					setAuthoriz(true);
 					checkToken();
 					navigate("/movies");
 					setErrorMessage("");
 				}
 			})
 			.catch((err) => {
-				// console.log(err);
-				setErrorMessage(err.message);
+				let errMessage = 'Произошла ошибка на сервере';
+				if (err === 401) errMessage = 'Неправильные данные';
+				setErrorMessage(errMessage);
 				setIsInfoTooltipPopupOpen(true);
 			})
 			.finally(() => {
@@ -115,7 +97,10 @@ const App = () => {
 				});
 			})
 			.catch((err) => {
-				setErrorMessage("Пользователь с такой почтой уже есть");
+				let errMessage = 'Произошла ошибка на сервере';
+				if (err === 400) errMessage = 'Неправильные данные';
+				if (err === 409) errMessage = 'Пользователь с такой почтой уже есть';
+				setErrorMessage(errMessage);
 				setIsInfoTooltipPopupOpen(true);
 			})
 			.finally(() => {
@@ -126,22 +111,22 @@ const App = () => {
 	useEffect(() => {
 		checkToken();
 	}, []);
+	
 	const checkToken = () => {
 		const token = localStorage.getItem("token");
-		const place = local.pathname;
 		if (token) {
 			MainApi.getProfile()
 				.then((data) => {
 					setCurrentUser(data);
-					setАuthoriz(true);
-					["/signin", "/signup"].includes(place)
-						? navigate("/movies")
-						: navigate();
+					setAuthoriz(true);
 				})
 				.catch((err) => {
 					console.log(`Ошибка: ${err}`);
-				});
-		};
+				})
+				.finally(() => setInitApp(false))
+		} else {
+			setInitApp(false);
+		}
 	};
 	// функции для редактирования данных
 	function handleUpdateUser(newData) {
@@ -157,7 +142,10 @@ const App = () => {
 			})
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
-				setErrorMessage(`Не удалось обновить профиль. ${err}`);
+				let errMessage = 'Произошла ошибка на сервере';
+				if (err === 400) errMessage = 'Не удалось обновить профиль. Неправильные данные';
+				if (err === 409) errMessage = 'Пользователь с такой почтой уже есть';
+				setErrorMessage(errMessage);
 				setIsInfoTooltipPopupOpen(true);
 			})
 			.finally(() => {
@@ -165,9 +153,8 @@ const App = () => {
 			});
 	};
 	const handleExit = () => {
-		setАuthoriz(false);
+		setAuthoriz(false);
 		localStorage.clear();
-		navigate("/");
 		setCurrentUser({
 			name: '',
 			email: '',
@@ -176,154 +163,126 @@ const App = () => {
 	};
 	// валимт
 	// работа с карточками 
-	React.useEffect(() => {
-		if (!currentUser) {
+	useEffect(() => {
+		if (!authoriz) {
 			return;
 		}
 		setLoading(true);
 		console.log("фильмы");
-		Promise
-			.all([MoviesApi.getMovies(), MainApi.getMoviesList()])
-			.then(([films, savedMovies]) => {
+		MainApi.getMoviesList()
+			.then((savedMovies) => {
 				const list = savedMovies.filter((item) => {
 					return item.owner === currentUser._id;
 				});
-
-				setSaveMovies(list);
-				setFoundSave(list);
-				setSave(list);
+				setSaveMovies(savedMovies);
+				setFoundSaveMoveis(savedMovies);
 				localStorage.setItem("saveMovies", JSON.stringify(list));
-
-				setMovies(films.map((movie) => {
-					return {
-						...movie,
-						isSave: Boolean(
-							list.find((item) => item.movieId === movie.id)
-						),
-					}
-				}));
-				setFilm(movies);
-				localStorage.setItem('movies', JSON.stringify(movies));
-				setFoundMoveis(movies);
-				setData(true);
 			})
 			.catch((err) => {
+				console.log(err.stack);
 				console.log(`Ошибка: ${err}`);
 			})
 			.finally(() => {
 				setLoading(false);
 			})
-		// setTimeout(handleGet(), 4000);
-	}, [currentUser]);
-	// function handleGet() {
-	// 	console.log("hi")
-	// 	console.log(movies)
-	// }
+	}, [authoriz]);
+
+	function searchMoveis(movies, keyWord) {
+		return movies.filter((item) => {
+			const isRuName = item.nameRU.toLowerCase().includes(keyWord.toLowerCase());
+			const isEnName = item.nameEN.toLowerCase().includes(keyWord.toLowerCase());
+			return isRuName || isEnName
+		})
+	};
+
+	// функция фильтрации короткометраждек в фильмах
+	function filterShortMovies(filteredMovies) {
+		return filteredMovies.filter((film) => film.duration < LENGHT_MOVIE);
+	}
+
+	function getMovies() {
+		MoviesApi.getMovies()
+			.then(films => {
+				const newMovis = films.map((movie) => {
+					return {
+						...movie,
+						isSave: Boolean(
+							saveMovies.find((item) => item.movieId === movie.id)
+						),
+					}
+				});
+				setMovies(newMovis);
+				localStorage.setItem('movies', JSON.stringify(newMovis));
+
+			})
+			.finally(() => setLoading(false))
+	}
+
+	useEffect(() => {
+		if (!authoriz || movies.length === 0) return;
+		handleSearchFilm(searchValue)
+	}, [movies])
 
 	// функция поиска фильмов
-	function handleSearchFilm(film) {
+	function handleSearchFilm(keyWord) {
 		setLoading(true);
-		localStorage.setItem('name', film);
-		console.log("поиск");
-		let list;
-		let shortList
-		if (valueCheckbox) {
-			list = movies.filter((item) => item.nameRU.toLowerCase().includes(film.toLowerCase()));
-			shortList = list.filter(((movie) => movie.duration < LENGHT_MOVIE));
-		} else {
-			shortList = movies.filter((item) => item.nameRU.toLowerCase().includes(film.toLowerCase()));
-		}
-		setName(film);
-		setFoundMoveis(shortList);
-		setFoundMoveisShort(shortList);
-		setFilm(shortList);
+		if (movies.length < 1) return getMovies();
+		localStorage.setItem('name', keyWord);
+		setSearchValue(keyWord);
 		setLoading(false);
-		localStorage.setItem('movies', JSON.stringify(list));
-		localStorage.setItem('foundMovies', JSON.stringify(shortList));
-		setStart(false);
-		setData(true);
-	};
-	// функция проверка короткометраждек в сохр фильмах
-	function handleCheckbox(value) {
-		console.log(nameSave)
-		// let list;
-		// let film;
-		// if (nameSave === "") {
-		// 	film = saveMovies.filter((film) => film.duration < LENGHT_MOVIE);
-		// 	list = saveMovies;
-		// } else {
-		// 	list = saveMovies.filter((item) => item.nameRU.toLowerCase().includes(nameSave.toLowerCase()));
-		// 	film = list.filter((film) => film.duration < LENGHT_MOVIE);
-		// }
-		const saveFilm = foundSave.filter((film) => film.duration < LENGHT_MOVIE);
+		console.log("поиск");
 
-		console.log(saveFilm)
-		if (value === true) {
-			// console.log("hi");
-			setSave(saveFilm);
-		}
-		else {
-			setSave(foundSave);
-		}
-		localStorage.setItem("foundSaveMovies", JSON.stringify(foundSave));
-		// localStorage.setItem("statusSave", value);
-		setData(true);
+		if (!keyWord) return setFoundMoveis([]);
+		
+		const list = searchMoveis(movies, keyWord);
+		setFoundMoveis(list);
 	};
-	function handleCheckboxMovies(value) {
-		console.log(name)
-		let list;
-		let film;
-		if (name === "") {
-			film = movies.filter((film) => film.duration < LENGHT_MOVIE);
-			list = movies;
-		} else {
-			list = movies.filter((item) => item.nameRU.toLowerCase().includes(name.toLowerCase()));
-			film = list.filter((film) => film.duration < LENGHT_MOVIE);
-		}
-		if (value === true) {
-			setFilm(film);
-		}
-		else {
-			setFilm(list);
-		}
-		setValueCheckbox(!valueCheckbox)
-		console.log(valueCheckbox)
-		localStorage.setItem("foundMovies", JSON.stringify(film));
-		// localStorage.setItem("status", false);
-		setStart(false);
-		setData(true);
+	
+	useEffect(() => {
+		localStorage.setItem('foundMoveis', JSON.stringify(foundMoveis));
+		const shortList = filterShortMovies(foundMoveis);
+		setFoundMoveisShort(shortList);
+	}, [foundMoveis])
+
+
+	// функция поиска в сохрангённых фильмах
+	function handleSaveSearchFilm(keyWord) {
+		const list = searchMoveis(saveMovies, keyWord);
+
+		localStorage.setItem('saveName', keyWord);
+		setFoundSaveMoveis(list);
+		localStorage.setItem('saveMovies', JSON.stringify(list));
 	};
+
+	useEffect(() => {
+		const shortList = filterShortMovies(foundSaveMoveis);
+		setSaveMoviesShort(shortList);
+	}, [foundSaveMoveis]);
+
+	function checkIsSave (movieId, movies) {
+		return movies.some(movie => {
+			console.log(movie.movieId === movieId);
+			return movie.movieId === movieId;
+		})
+ }
 	// функция добавления фильма
-	function handleAddMovie(data) {
+	function handleAddMovie(movie) {
 		console.log("сохранение");
-		MainApi.addMovie(data)
+		MainApi.addMovie(movie)
 			.then((newMovie) => {
-				setSave([...saveMovies, data]);
-				setSaveMovies([...saveMovies, data]);
-				setFoundSave(saveMovies);
-				setFilm(film.map((_movie) => {
-					return {
-						..._movie,
-						isSave: _movie.id === newMovie.movieId || _movie.isSave
-					}
-				}))
+				const newSavedMovie = [...saveMovies, newMovie]
+				setSaveMovies(newSavedMovie);
 				setErrorMessage("");
 
-				const value = localStorage.getItem("status");
-				if (value)
-					handleCheckSave(newMovie.movieId, true)
-				else handleChangeSave(newMovie.movieId, true)
+				handleChangeSave(newMovie.movieId, true)
 
 				setMovies(movies.map((_movie) => {
 					return {
 						..._movie,
-						isSave: _movie.id === newMovie.movieId || _movie.isSave
+						isSave: checkIsSave(_movie.id,  newSavedMovie)
 					}
 				}))
-				setFoundMoveis(movies);
 
-				// setFilm(movies)
-				setData(true);
 				localStorage.setItem("movies", JSON.stringify(movies))
 				localStorage.setItem("saveMovies", JSON.stringify(saveMovies))
 			})
@@ -333,79 +292,33 @@ const App = () => {
 	};
 	// функция удаления фильмов
 	function handleDeleteMovies(movie) {
-		MainApi.getMoviesList()
-			.then((_savedMovies) => {
-				setErrorMessage("");
-				let id;
-				movie.id
-					? _savedMovies.find((item) => {
-						if (item.nameRU.includes(movie.nameRU)) {
-							return (id = item._id)
-						}
-						else return (id = "");
-					})
-					: (id = movie._id);
-				console.log(id)
-				MainApi.removeMovie(id)
-					.then((deleteMovie) => {
-						console.log("удаление");
-						const list = _savedMovies.filter((film) => {
-							return !film._id.includes(id);
-						});
-						setSaveMovies(list);
+		const id = movie._id ? movie._id : saveMovies.find((film => film.movieId === movie.id))._id;
+		MainApi.removeMovie(id)
+			.then((deleteMovie) => {
+				console.log("удаление");
+				const list = saveMovies.filter((film) => {
+					return !film._id.includes(id);
+				});
+				setSaveMovies(list);
+				setFoundSaveMoveis(state => state.filter(film => film._id !== id))
 
-						// setFoundSave(saveMovies);
-						// localStorage.setItem("saveMovies", JSON.stringify(list));
-						local.pathname === "saved-movie"
-							? setMovies(movies.map((_movie) => {
-								return {
-									..._movie,
-									isSave: _movie.nameRU === movie.nameRU ? !movie.isSave : _movie.isSave
-								}
-							}))
-							: setMovies(movies.map((_movie) => {
-								return {
-									..._movie,
-									isSave: _movie.nameRU === movie.nameRU ? false : _movie.isSave
-								}
-							}))
+				setMovies(movies.map((_movie) => {
+					return {
+						..._movie,
+						isSave: checkIsSave(_movie.id,  list)
+					}
+				}))
 
-						local.pathname === "saved-movie"
-							? setFilm(film.map((_movie) => {
-								return {
-									..._movie,
-									isSave: _movie.nameRU === movie.nameRU ? !movie.isSave : _movie.isSave
-								}
-							}))
-							: setFilm(film.map((_movie) => {
-								return {
-									..._movie,
-									isSave: _movie.nameRU === movie.nameRU ? false : _movie.isSave
-								}
-							}))
-						// const saveList = save.filter((film) => {
-						// 	return !film._id.includes(id);
-						// });
-						setSave(list);
-
-						setFoundMoveis(movie);
-						setData(true);
-						// localStorage.setItem("saveMovies", JSON.stringify(saveMovies));
-						const pageValue = localStorage.getItem("status");
-						if (pageValue) {
-							handleCheckSave(deleteMovie.movieId, false);
-						} else {
-							handleChangeSave(deleteMovie.movieId, false);
-						}
-					}).catch((err) => {
-						console.log(`Ошибка: ${err}`);
-					})
+				setSaveMovies(list);
+				handleChangeSave(deleteMovie.movieId, false);
+			}).catch((err) => {
+				console.log(`Ошибка: ${err}`);
 			})
 			.catch((err) => {
 				console.log(err)
 			});
-
 	};
+	
 	// функция получения сохранёных фильмов
 	function handleChangeSave(id, isLike) {
 		console.log("change");
@@ -419,49 +332,11 @@ const App = () => {
 		);
 
 		localStorage.setItem("movies", JSON.stringify(newMovieList));
-		setData(true);
 		return newMovieList
 	};
-	// функция получения сохранёных фильмов
-	function handleCheckSave(user, save) {
-		const page = local.pathname === "/saved-movies";
-		let foundMovies = [];
-		if (page) {
-			foundMovies = localStorage.getItem("foundSaveMovies");
-		} else {
-			foundMovies = localStorage.getItem("foundMovies");
-		}
-		const list = JSON.parse(foundMovies);
-		const data = list.map((film) =>
-		({
-			...film,
-			isSave: film.id === user
-		})
-		);
-		if (page) {
-			localStorage.setItem("foundSaveMovies", JSON.stringify(movies));
-		} else {
-			localStorage.setItem("foundMovies", JSON.stringify(saveMovies));
 
-		}
-		setData(true);
+	if (isInitApp) return(<></>)
 
-		return data
-	};
-	// функция поиска в сохрангённых фильмах
-	function handleSaveSearchFilm(film) {
-		const list = saveMovies.filter((item) => item.nameRU.toLowerCase().includes(film.toLowerCase()));
-		// const list = foundSave.filter((item) => item.nameRU.toLowerCase().includes(film.toLowerCase()));
-		setNameSave(film);
-		localStorage.setItem('saveName', film);
-		setFoundSave(list);
-		setFoundSaveShort(foundSave);
-		setSave(list);
-		console.log(list);
-		localStorage.setItem('saveMovies', JSON.stringify(list));
-
-		setData(true);
-	};
 	return (
 		<CurrentUserContext.Provider value={currentUser}>
 			<div className="page">
@@ -483,44 +358,31 @@ const App = () => {
 					// element={<Register isRegister={handleRegister} />}
 					/>
 					<Route
-						path="*"
-						element={<NotFound />}
-					/>
-					<Route
-						path="/movies/*"
+						path="/movies"
 						element={
 							<ProtectedRoute
-								// isLogin={true}
 								isLogin={authoriz}
 								preloader={loading}
 								element={Movies}
 								onAddMovies={handleAddMovie}
 								onDeleteMovies={handleDeleteMovies}
-								onClick={handleCheckboxMovies}
 								onSearch={handleSearchFilm}
-								data={data}
-								setData={setData}
-								movies={film}
-								value={start}
-								list={movies}
-							// message={errorMovies}
+								movies={foundMoveis}
+								moviesShort={foundMoveisShort}
 							/>
 						}
 					/>
 					<Route
-						path="/saved-movies/*"
+						path="/saved-movies"
 						element={
 							<ProtectedRoute
-								// isLogin={true}
 								isLogin={authoriz}
 								preloader={loading}
 								element={SavedMovies}
-								data={data}
-								setData={setData}
 								onDeleteMovies={handleDeleteMovies}
-								onClick={handleCheckbox}
 								onSearch={handleSaveSearchFilm}
-								saveMovies={save}
+								saveMovies={foundSaveMoveis}
+								saveMoviesShort={saveMoviesShort}
 							/>
 						}
 					/>
@@ -536,6 +398,10 @@ const App = () => {
 								block={formBlock}
 							/>
 						}
+					/>
+					<Route
+						path="/*"
+						element={<NotFound />}
 					/>
 				</Routes>
 				<InfoTooltip
