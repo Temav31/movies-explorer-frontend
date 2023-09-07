@@ -58,7 +58,7 @@ const App = () => {
 	});
 	// закрытие попапа
 	function closePopup() {
-		setErrorMessage("");
+		// setErrorMessage("");
 		setIsInfoTooltipPopupOpen(false);
 	}
 
