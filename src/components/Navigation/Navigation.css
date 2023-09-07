@@ -39,7 +39,11 @@
 .navigation__container {
 	display: none;
 }
+.navigation__page{
+	font-weight: 900;
+	
 
+}
 .navigation__author {
 	text-decoration: none;
 	color: #000;

@@ -4,8 +4,8 @@ import "./AboutProject.css";
 import React from "react";
 const AboutProject = () => {
 	return (
-		<section className="about-project">
-			<h2 id="about-project" className="about-project__head">
+		<section className="about-project" id="about-project">
+			<h2 className="about-project__head">
 				О проекте
 			</h2>
 			<div className="about-project__about">

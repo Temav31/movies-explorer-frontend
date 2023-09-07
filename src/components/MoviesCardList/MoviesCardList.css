@@ -7,6 +7,14 @@
 .movies-cardlist__empty{
 	padding: 40px 10px 170px;
 }
+.movies-cardlist__text{
+	text-align: center;
+	color: #000;
+	font-size: 15px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+}
 
 /* на средний размер */
 @media (min-width: 768px) {

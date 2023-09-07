@@ -7,8 +7,8 @@ import Logo from "../../images/logo1.svg";
 import Navigation from "../Navigation/Navigation";
 import Menu from "../Menu/Menu";
 const Header = (props) => {
-	const { isLoggin = true } = props;
-	// const isLoggin = false;
+	const { isLogin } = props;
+	// const value = true;
 	// место
 	const location = useLocation();
 	return (
@@ -16,7 +16,7 @@ const Header = (props) => {
 			<Link className="header__link" to="/">
 				<img className="header__image" src={Logo} alt="Лого" />
 			</Link>
-			{!isLoggin ? (
+			{!isLogin ? (
 				<>
 					<div className="header__container">
 						<Link className="header__sign-up" to="/signup">

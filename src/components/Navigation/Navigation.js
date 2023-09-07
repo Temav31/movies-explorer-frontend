@@ -13,14 +13,24 @@ const Navigation = () => {
 				${location.pathname === "/"
 						? "navigation__text"
 						: ""
-					}`} to="/movies">
+					}
+					${location.pathname === "/movies"
+					? "navigation__page"
+					: ""
+				}`} 
+					to="/movies">
 					Фильмы
 				</Link>
 				<Link className={`navigation__link 
 				${location.pathname === "/"
 						? "navigation__text"
 						: ""
-					}`} to="/saved-movies">
+					}
+					${location.pathname === "/saved-movies"
+					? "navigation__page"
+					: ""
+				}
+					`} to="/saved-movies">
 					Сохранённые фильмы
 				</Link>
 			</div>

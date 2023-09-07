@@ -4,8 +4,8 @@ import "./Techs.css";
 import React from "react";
 const Techs = () => {
 	return (
-		<section className="techs">
-			<h2 id="techs" className="techs__head">
+		<section className="techs"  id="techs">
+			<h2 className="techs__head">
 				Технологии
 			</h2>
 			<h3 className="techs__title">

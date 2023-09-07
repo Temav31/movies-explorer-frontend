@@ -23,13 +23,13 @@ const Menu = () => {
 					<img src={Exite} alt="Выход" className='menu__image' />
 				</button>
 				<div className="menu__container">
-					<Link className="menu__link">
+					<Link className="menu__link" to="/">
 					Главная
 					</Link>
-					<Link className="menu__link menu__link-movies">
+					<Link className="menu__link menu__link-movies" to="/movies">
 					Фильмы
 					</Link>
-					<Link className="menu__link">
+					<Link className="menu__link" to="/saved-movies">
 					Сохранённые фильмы
 					</Link>
 				</div>

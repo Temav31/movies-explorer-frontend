@@ -8,7 +8,7 @@ import Logo from "../../images/logo1.svg";
 
 import React from "react";
 const AuthorForm = (props) => {
-	const {title, formName, text, textLink, textButton, link, children} = props;
+					const { title, formName, text, textLink, textButton, link, children, isValid, onSubmit, block } = props;
 	return (
 		<section className="author-form">
 			<Link to="/" className="author-form__link-logo">
@@ -17,12 +17,15 @@ const AuthorForm = (props) => {
 			<h1 className="author-form__header">
 				{title}
 			</h1>
-			<form className="author-form__form" name={`form-${formName}`}>
+			<form className="author-form__form" name={`form-${formName}`} onSubmit={onSubmit} >
 				{children}
+				<button className={`author-form__button ${!isValid ? "author-form__button_closed" : ""}
+				${block ? "author-form__button_closed" : ""}`} 
+				type="submit"
+				>
+					{textButton}
+				</button>
 			</form>
-			<button className="author-form__button" type="submit">
-				{textButton}
-			</button>
 			<div className="author-form__container">
 				<p className="author-form__text">
 					{text}

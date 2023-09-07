@@ -10,18 +10,21 @@ import AboutMe from "../AboutMe/AboutMe";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 const Main = (props) => {
+	const { isLogin } = props;
 	return (
 		<>
-		<Header />
-		{/* Основной бллок */}
-		<main>
-			<Promo />
-			<AboutProject />
-			<Techs />
-			<AboutMe />
-		</main>
-		{/* Конец основного блока */}
-		<Footer />
+			<Header 
+			isLogin={isLogin}
+			/>
+			{/* Основной бллок */}
+			<main>
+				<Promo />
+				<AboutProject />
+				<Techs />
+				<AboutMe />
+			</main>
+			{/* Конец основного блока */}
+			<Footer />
 		</>
 	);
 };
