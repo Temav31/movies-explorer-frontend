@@ -1,7 +1,9 @@
 .movies-button {
 	padding: 50px 10px 80px;
 }
-
+.movies-button__save-movies{
+	display: none;
+}
 .movies-button__button {
 	color: #000;
 	text-align: center;

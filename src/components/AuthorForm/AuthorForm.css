@@ -30,6 +30,9 @@
 .author-form__form {
 	/* padding-bottom: 246px; */
 	height: 423px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 
 .author-form__label {
@@ -80,15 +83,21 @@
 	border-radius: 3px;
 	color: #FFF;
 	text-align: center;
-	font-family: Inter;
 	font-size: 12px;
 	font-style: normal;
 	font-weight: 500;
 	line-height: normal;
-	/* padding: 15px 113px 15px 111px; */
+	width: 100%;
+	margin: auto 0 0;
 	padding: 15px 0;
 	border: none;
 	cursor: pointer;
+}
+
+.author-form__button_closed {
+	pointer-events: none;
+	color: #A0A0A0;
+	background-color: #F9F9F9;
 }
 
 .author-form__button:hover {
@@ -150,7 +159,7 @@
 	}
 
 	.author-form__form {
-		height: 335px;
+		height: 380px;
 	}
 
 
