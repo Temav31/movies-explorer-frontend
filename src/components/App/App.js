@@ -27,6 +27,7 @@ import MoviesApi from "../../utils/MoviesApi";
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 // константы
 import { LENGHT_MOVIE } from '../../utils/constant';
+import { toBeRequired } from '@testing-library/jest-dom/matchers';
 const App = () => {
 	// навигация 
 	const navigate = useNavigate();
@@ -344,7 +345,7 @@ const App = () => {
 					<Route
 						path="/"
 						element={<Main
-							isLogin={authoriz}
+							isLogin={true}
 						/>}
 					/>
 					<Route
@@ -361,7 +362,8 @@ const App = () => {
 						path="/movies"
 						element={
 							<ProtectedRoute
-								isLogin={authoriz}
+								isLogin={true}
+								// isLogin={authoriz}
 								preloader={loading}
 								element={Movies}
 								onAddMovies={handleAddMovie}
@@ -376,7 +378,8 @@ const App = () => {
 						path="/saved-movies"
 						element={
 							<ProtectedRoute
-								isLogin={authoriz}
+								isLogin={true}
+								// isLogin={authoriz}
 								preloader={loading}
 								element={SavedMovies}
 								onDeleteMovies={handleDeleteMovies}
@@ -390,8 +393,8 @@ const App = () => {
 						path="/profile"
 						element={
 							<ProtectedRoute
-								// isLogin={true}
-								isLogin={authoriz}
+								isLogin={true}
+								// isLogin={authoriz}
 								element={Profile}
 								isExite={handleExit}
 								onUpdateUser={handleUpdateUser}
